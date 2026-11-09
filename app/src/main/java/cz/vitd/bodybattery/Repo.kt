@@ -34,7 +34,7 @@ class PrefsStore(context: Context) : KeyValueStore {
 /** App-wide state shared by the activity, the widget and the background worker. */
 object Repo {
     private const val K_RESULT = "result"
-    private const val K_HISTORY = "history.v2" // v1 was computed without parsed data
+    private const val K_HISTORY = "history.v3" // bump whenever the model changes (old levels are not comparable)
     private const val K_DIAG = "diag"
     private const val K_ERROR = "error"
     private val mutex = Mutex()
