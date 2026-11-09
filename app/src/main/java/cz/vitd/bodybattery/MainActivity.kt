@@ -171,7 +171,7 @@ class MainActivity : ComponentActivity() {
             !loggedIn -> "Připojte svůj účet COROS"
             result == null -> if (busy) "Načítám data z Korosu…" else "Zatím žádná data"
             else -> "Aktualizováno " + Instant.ofEpochSecond(result.computedAt).atZone(zone).format(fmt)
-        }
+        } + "  ·  v" + Repo.appVersion(this)
         val err = Repo.lastError(this)
         details.text = buildString {
             if (err != null) append("⚠ ").append(err).append("\n\n")

@@ -34,7 +34,7 @@ class PrefsStore(context: Context) : KeyValueStore {
 /** App-wide state shared by the activity, the widget and the background worker. */
 object Repo {
     private const val K_RESULT = "result"
-    private const val K_HISTORY = "history"
+    private const val K_HISTORY = "history.v2" // v1 was computed without parsed data
     private const val K_DIAG = "diag"
     private const val K_ERROR = "error"
     private val mutex = Mutex()
@@ -75,13 +75,14 @@ object Repo {
                 history.filter { it.first <= t && t - it.first <= 8 * 3600 }.maxByOrNull { it.first }?.second
             }
             st.put(K_RESULT, outcome.result.toJson().toString())
-            st.put(K_DIAG, outcome.diagnostics)
+            st.put(K_DIAG, "Verze aplikace: ${appVersion(app)}\n" + outcome.diagnostics)
             st.put(K_ERROR, null)
             saveHistory(st, history, outcome.result)
             _version.value++
             BatteryWidget.updateAll(app)
             return outcome.result
-        } catch (e: Exception) {
+        } catch (e: Throwable) {
+            st.put(K_DIAG, "CHYBA při obnově (${ZonedDateTime.now()}, verze ${appVersion(app)}):\n" + e.stackTraceToString().take(4000))
             setError(app, e.message ?: e.toString())
             BatteryWidget.updateAll(app)
             return null
@@ -101,6 +102,9 @@ object Repo {
         merged.forEach { arr.put(JSONArray().put(it.first).put(it.second)) }
         st.put(K_HISTORY, arr.toString())
     }
+
+    fun appVersion(ctx: Context): String =
+        runCatching { ctx.packageManager.getPackageInfo(ctx.packageName, 0).versionName }.getOrNull() ?: "?"
 
     fun schedule(ctx: Context) {
         val constraints = Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
