@@ -57,7 +57,12 @@ data class BatteryResult(
 object BatteryModel {
     private const val STEP = 300L // 5 min
     private const val DEFAULT_START = 30.0
-    private const val DEFAULT_AWAKE_DRAIN_PER_H = 3.0
+    private const val DEFAULT_AWAKE_DRAIN_PER_H = 2.5
+    private const val MIN_LEVEL = 5.0
+    private const val SLEEP_K = 0.40      // sleep charge per hour per stress point below SLEEP_ZERO
+    private const val SLEEP_ZERO = 50.0   // sleep stress at which charging stops
+    private const val REST_MAX = 30.0     // awake stress up to which the battery slowly recharges
+    private const val DRAIN_K = 0.10      // extra drain per hour per stress point above REST_MAX
 
     fun compute(data: HealthData, now: ZonedDateTime, previousLevelAt: (Long) -> Int?): BatteryResult {
         val nowS = now.toEpochSecond()
@@ -112,19 +117,22 @@ object BatteryModel {
             Triple(a.start, a.start + a.durationSec, total / max(1.0, a.durationSec / STEP.toDouble()))
         }
 
-        fun delta(t: Long, dt: Long): Double {
+        // Calibrated for the COROS stress scale, which reads ~10 points higher than Garmin's.
+        fun delta(t: Long, dt: Long, level: Double): Double {
             val h = dt / 3600.0
             val act = acts.firstOrNull { t >= it.first && t < it.second }
             if (act != null) return -act.third * (dt.toDouble() / STEP)
             val asleep = sleeps.any { t >= it.start && t < it.end }
             val s = stressAt(t)
             return if (asleep) {
-                if (s != null) max(0.0, 0.4 * (40 - s)) * h * hrvFactor
-                else 7.5 * scoreFactor * hrvFactor * h
+                // Charging slows down as the battery fills up.
+                val saturation = (1.15 - level / 100.0).coerceIn(0.1, 1.0)
+                val rate = if (s != null) max(0.0, SLEEP_K * (SLEEP_ZERO - s)) else 8.0 * scoreFactor
+                rate * hrvFactor * saturation * h
             } else when {
                 s == null -> -DEFAULT_AWAKE_DRAIN_PER_H * h
-                s <= 25 -> (25 - s) * 0.06 * h
-                else -> -(1.0 + (s - 25) * 0.12) * h
+                s <= REST_MAX -> (REST_MAX - s) * 0.08 * h
+                else -> -(0.8 + (s - REST_MAX) * DRAIN_K) * h
             }
         }
 
@@ -134,7 +142,7 @@ object BatteryModel {
             while (t < to) {
                 val dt = min(STEP, to - t)
                 val before = level
-                level = (level + delta(t, dt)).coerceIn(1.0, 100.0)
+                level = (level + delta(t, dt, level)).coerceIn(MIN_LEVEL, 100.0)
                 t += dt
                 onStep(t, before, level)
             }
@@ -172,7 +180,7 @@ object BatteryModel {
         if (wake > nowS) wakeLevel = level
 
         return BatteryResult(
-            level = level.toInt().coerceIn(1, 100),
+            level = level.toInt().coerceIn(MIN_LEVEL.toInt(), 100),
             wakeLevel = wakeLevel.toInt(),
             charged = charged.toInt(),
             drained = drained.toInt(),
