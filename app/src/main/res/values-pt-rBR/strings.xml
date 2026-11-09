@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="charge_term">Carga</string>
+    <string name="level_high">Alta</string>
+    <string name="level_medium">Média</string>
+    <string name="level_low">Baixa</string>
+    <string name="level_very_low">Muito baixa</string>
+
+    <string name="action_refresh">Atualizar</string>
+    <string name="action_settings">Configurações</string>
+    <string name="action_back">Voltar</string>
+    <string name="action_continue">Continuar</string>
+    <string name="action_cancel">Cancelar</string>
+    <string name="action_ok">OK</string>
+
+    <string name="connect_button">Conectar COROS</string>
+    <string name="connect_restart">Reiniciar login</string>
+    <string name="status_pending">Conclua o login no navegador e depois volte aqui…</string>
+    <string name="status_not_connected">Conecte sua conta COROS</string>
+    <string name="status_loading">Carregando dados do COROS…</string>
+    <string name="status_no_data">Ainda não há dados</string>
+    <string name="status_updating">Atualizando…</string>
+    <string name="status_updated">Atualizado às %1$s</string>
+    <string name="toast_connected">COROS conectado</string>
+
+    <string name="stat_morning">Manhã</string>
+    <string name="stat_charged">Recarregado</string>
+    <string name="stat_drained">Gasto</string>
+    <string name="chart_title">Hoje</string>
+    <string name="chart_sleep">Sono</string>
+    <string name="ring_cd">Carga %1$d de 100</string>
+    <string name="ring_cd_unknown">Carga desconhecida</string>
+
+    <string name="note_wake_unknown">Horário de despertar desconhecido – considerando 7:00</string>
+    <string name="note_no_sleep">Sem dados de sono – considerando sono até 7:00</string>
+    <string name="note_low_data">Poucos dados contínuos de estresse – a curva é aproximada</string>
+    <string name="note_start_replayed">Nível antes de dormir calculado a partir do dia anterior</string>
+    <string name="note_start_default">Nível antes de dormir desconhecido – começando em %1$d</string>
+
+    <string name="err_not_connected">Não conectado ao COROS</string>
+    <string name="err_session_expired">Seu login expirou. Conecte o COROS novamente.</string>
+    <string name="err_login_none">Nenhum login em andamento</string>
+    <string name="err_login_expired">O login expirou. Tente novamente.</string>
+    <string name="err_login_failed">Falha no login</string>
+    <string name="err_login_used">Este login já foi usado. Tente novamente.</string>
+    <string name="err_login_unexpected">Resposta inesperada durante o login</string>
+    <string name="err_server">O COROS retornou um erro</string>
+    <string name="err_network">Não foi possível acessar o COROS. Verifique sua conexão com a internet.</string>
+    <string name="err_login_start">Não foi possível iniciar o login</string>
+    <string name="err_login_timeout">O login não foi concluído a tempo. Tente novamente.</string>
+
+    <string name="widget_connect">conectar</string>
+    <string name="widget_loading">carregando</string>
+    <string name="widget_desc">Sua carga diária calculada a partir dos dados do COROS</string>
+
+    <string name="settings_title">Configurações</string>
+    <string name="settings_account">Conta COROS</string>
+    <string name="settings_connected">Conectado – os dados são atualizados a cada 15 minutos, aproximadamente</string>
+    <string name="settings_not_connected">Não conectado – conecte-se na tela principal</string>
+    <string name="settings_disconnect">Desconectar COROS</string>
+    <string name="toast_disconnected">COROS desconectado</string>
+
+    <string name="settings_notif_title">Notificação diária</string>
+    <string name="settings_notif_desc">Mostra sua carga uma vez por dia.</string>
+    <string name="settings_notif_time">Horário: %1$s</string>
+    <string name="notif_permission_title">Permitir notificações</string>
+    <string name="notif_permission_text">Para mostrar sua carga diária, o Android precisa da sua permissão para exibir notificações. Nada sai do seu telefone.</string>
+    <string name="notif_permission_denied">As notificações não estão permitidas. Você pode ativá-las nas configurações do sistema.</string>
+
+    <string name="settings_diag_title">Diagnóstico</string>
+    <string name="settings_diag_desc">Os dados que o app recebeu do COROS pela última vez. Útil para resolver problemas.</string>
+    <string name="diag_show">Mostrar</string>
+    <string name="diag_hide">Ocultar</string>
+    <string name="diag_copy">Copiar</string>
+    <string name="toast_copied">Copiado</string>
+
+    <string name="settings_about">Sobre</string>
+    <string name="about_independent">Projeto independente. Não é afiliado, endossado nem vinculado ao COROS ou à Garmin.</string>
+    <string name="about_privacy">Seus dados ficam neste telefone. O app se comunica apenas com o serviço oficial do COROS e não envia nada para nenhum outro lugar.</string>
+    <string name="about_version">Versão %1$s</string>
+
+    <string name="notif_channel_name">Carga diária</string>
+    <string name="notif_channel_desc">Uma notificação por dia com sua carga atual</string>
+    <string name="notif_today">Hoje: %1$d/100 · %2$s</string>
+    <string name="notif_last">Último valor (%1$s): %2$d/100 · %3$s</string>
+
+    <string name="vo2_title">VO₂ máx</string>
+    <string name="vo2_unit">ml/kg/min</string>
+    <string name="vo2_source_coros">Do COROS</string>
+    <string name="vo2_source_runs">Estimativa a partir das suas corridas</string>
+    <string name="vo2_source_rhr">Estimativa a partir da frequência cardíaca</string>
+    <string name="vo2_change">%1$s em relação ao mês passado</string>
+    <string name="vo2_no_change">Ainda sem comparação com o mês passado</string>
+    <string name="vo2_no_data">Dados insuficientes</string>
+    <string name="vo2_missing_runs">São necessárias corridas de pelo menos 15 minutos com frequência cardíaca.</string>
+    <string name="vo2_missing_rhr">É necessária sua frequência cardíaca de repouso.</string>
+    <string name="vo2_missing_maxhr">É necessária sua data de nascimento no perfil do COROS ou um treino com frequência cardíaca máxima registrada.</string>
+    <string name="vo2_explain_title">Como o VO₂ máx é determinado</string>
+    <string name="vo2_explain_coros">Este valor é calculado pelo COROS e exibido sem alterações.</string>
+    <string name="vo2_explain_runs">Isto é uma estimativa, não uma medição. Para cada corrida adequada (pelo menos 15 minutos), o consumo de oxigênio do seu ritmo é calculado com a equação de corrida do ACSM e ajustado conforme o esforço do seu coração entre a frequência cardíaca de repouso e a máxima. É exibida a mediana das suas últimas corridas; valores incomuns são ignorados.</string>
+    <string name="vo2_explain_rhr">Isto é uma estimativa aproximada, não uma medição. Sem corridas adequadas, ela é calculada a partir da razão entre sua frequência cardíaca máxima e a de repouso (método Uth). Corridas com frequência cardíaca dão uma estimativa melhor.</string>
+    <string name="vo2_explain_missing">Ainda não há dados suficientes para uma estimativa. É melhor não mostrar nenhum número do que um número inventado.</string>
+
+    <string name="diag_version">Versão do app: %1$s</string>
+    <string name="diag_recognized">Dados reconhecidos</string>
+    <string name="diag_counts">Frequência cardíaca: %1$d, estresse: %2$d, VFC: %3$d registros</string>
+    <string name="diag_sleep">Períodos de sono: %1$d</string>
+    <string name="diag_calc">Cálculo</string>
+    <string name="diag_calc_line">Agora %1$d, manhã %2$d, +%3$d / −%4$d</string>
+    <string name="diag_vo2">VO₂ máx: %1$s</string>
+    <string name="diag_tools">Ferramentas COROS MCP disponíveis (%1$d)</string>
+    <string name="diag_calls">Chamadas (%1$d)</string>
+    <string name="diag_call_error">(erro)</string>
+    <string name="diag_truncated">[… truncado, %1$d caracteres no total …]</string>
+    <string name="diag_error">Erro ao atualizar (%1$s, versão %2$s):</string>
+    <string name="diag_empty">Ainda não há dados.</string>
+</resources>

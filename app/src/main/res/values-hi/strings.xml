@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="charge_term">चार्ज</string>
+    <string name="level_high">ऊँचा</string>
+    <string name="level_medium">मध्यम</string>
+    <string name="level_low">कम</string>
+    <string name="level_very_low">बहुत कम</string>
+
+    <string name="action_refresh">रीफ़्रेश करें</string>
+    <string name="action_settings">सेटिंग</string>
+    <string name="action_back">वापस</string>
+    <string name="action_continue">जारी रखें</string>
+    <string name="action_cancel">रद्द करें</string>
+    <string name="action_ok">ठीक है</string>
+
+    <string name="connect_button">COROS कनेक्ट करें</string>
+    <string name="connect_restart">साइन-इन फिर से शुरू करें</string>
+    <string name="status_pending">ब्राउज़र में साइन-इन पूरा करें, फिर यहाँ लौटें…</string>
+    <string name="status_not_connected">अपना COROS खाता कनेक्ट करें</string>
+    <string name="status_loading">COROS से डेटा लोड हो रहा है…</string>
+    <string name="status_no_data">अभी कोई डेटा नहीं</string>
+    <string name="status_updating">अपडेट हो रहा है…</string>
+    <string name="status_updated">%1$s पर अपडेट किया गया</string>
+    <string name="toast_connected">COROS कनेक्ट हो गया</string>
+
+    <string name="stat_morning">सुबह</string>
+    <string name="stat_charged">रिचार्ज</string>
+    <string name="stat_drained">खर्च</string>
+    <string name="chart_title">आज</string>
+    <string name="chart_sleep">नींद</string>
+    <string name="ring_cd">चार्ज 100 में से %1$d</string>
+    <string name="ring_cd_unknown">चार्ज अज्ञात</string>
+
+    <string name="note_wake_unknown">जागने का समय अज्ञात – 7:00 माना गया</string>
+    <string name="note_no_sleep">नींद का डेटा नहीं – 7:00 तक नींद मानी गई</string>
+    <string name="note_low_data">लगातार तनाव डेटा कम है – ग्राफ़ अनुमानित है</string>
+    <string name="note_start_replayed">सोने से पहले का स्तर पिछले दिन के डेटा से निकाला गया</string>
+    <string name="note_start_default">सोने से पहले का स्तर अज्ञात – %1$d से शुरू</string>
+
+    <string name="err_not_connected">COROS से कनेक्ट नहीं है</string>
+    <string name="err_session_expired">आपका साइन-इन समाप्त हो गया है। कृपया COROS फिर से कनेक्ट करें।</string>
+    <string name="err_login_none">कोई साइन-इन जारी नहीं है</string>
+    <string name="err_login_expired">साइन-इन समाप्त हो गया। कृपया फिर से कोशिश करें।</string>
+    <string name="err_login_failed">साइन-इन विफल रहा</string>
+    <string name="err_login_used">यह साइन-इन पहले ही इस्तेमाल हो चुका है। कृपया फिर से कोशिश करें।</string>
+    <string name="err_login_unexpected">साइन-इन के दौरान अनपेक्षित जवाब मिला</string>
+    <string name="err_server">COROS ने त्रुटि लौटाई</string>
+    <string name="err_network">COROS तक नहीं पहुँच सके। अपना इंटरनेट कनेक्शन जाँचें।</string>
+    <string name="err_login_start">साइन-इन शुरू नहीं हो सका</string>
+    <string name="err_login_timeout">साइन-इन समय पर पूरा नहीं हुआ। कृपया फिर से कोशिश करें।</string>
+
+    <string name="widget_connect">कनेक्ट करें</string>
+    <string name="widget_loading">लोड हो रहा है</string>
+    <string name="widget_desc">COROS डेटा से गणना किया गया आपका दैनिक चार्ज</string>
+
+    <string name="settings_title">सेटिंग</string>
+    <string name="settings_account">COROS खाता</string>
+    <string name="settings_connected">कनेक्टेड – डेटा लगभग हर 15 मिनट में रीफ़्रेश होता है</string>
+    <string name="settings_not_connected">कनेक्ट नहीं – मुख्य स्क्रीन पर कनेक्ट करें</string>
+    <string name="settings_disconnect">COROS डिस्कनेक्ट करें</string>
+    <string name="toast_disconnected">COROS डिस्कनेक्ट हो गया</string>
+
+    <string name="settings_notif_title">दैनिक सूचना</string>
+    <string name="settings_notif_desc">दिन में एक बार आपका चार्ज दिखाती है।</string>
+    <string name="settings_notif_time">समय: %1$s</string>
+    <string name="notif_permission_title">सूचनाओं की अनुमति दें</string>
+    <string name="notif_permission_text">दैनिक चार्ज दिखाने के लिए Android को सूचनाएँ दिखाने की आपकी अनुमति चाहिए। कुछ भी आपके फ़ोन से बाहर नहीं जाता।</string>
+    <string name="notif_permission_denied">सूचनाओं की अनुमति नहीं है। आप इन्हें सिस्टम सेटिंग में चालू कर सकते हैं।</string>
+
+    <string name="settings_diag_title">डायग्नोस्टिक्स</string>
+    <string name="settings_diag_desc">ऐप को COROS से आख़िरी बार मिला डेटा। समस्याएँ सुलझाने में काम आता है।</string>
+    <string name="diag_show">दिखाएँ</string>
+    <string name="diag_hide">छिपाएँ</string>
+    <string name="diag_copy">कॉपी करें</string>
+    <string name="toast_copied">कॉपी हो गया</string>
+
+    <string name="settings_about">ऐप के बारे में</string>
+    <string name="about_independent">स्वतंत्र प्रोजेक्ट। COROS या Garmin से संबद्ध, समर्थित या जुड़ा हुआ नहीं है।</string>
+    <string name="about_privacy">आपका डेटा इसी फ़ोन पर रहता है। ऐप केवल आधिकारिक COROS सेवा से बात करता है और कहीं और कुछ नहीं भेजता।</string>
+    <string name="about_version">संस्करण %1$s</string>
+
+    <string name="notif_channel_name">दैनिक चार्ज</string>
+    <string name="notif_channel_desc">आपके मौजूदा चार्ज के साथ दिन में एक सूचना</string>
+    <string name="notif_today">आज: %1$d/100 · %2$s</string>
+    <string name="notif_last">अंतिम ज्ञात (%1$s): %2$d/100 · %3$s</string>
+
+    <string name="vo2_title">VO₂ max</string>
+    <string name="vo2_unit">ml/kg/min</string>
+    <string name="vo2_source_coros">COROS से</string>
+    <string name="vo2_source_runs">आपकी दौड़ों से अनुमान</string>
+    <string name="vo2_source_rhr">हृदय गति से अनुमान</string>
+    <string name="vo2_change">पिछले महीने की तुलना में %1$s</string>
+    <string name="vo2_no_change">पिछले महीने से अभी तुलना नहीं</string>
+    <string name="vo2_no_data">पर्याप्त डेटा नहीं</string>
+    <string name="vo2_missing_runs">हृदय गति के साथ कम से कम 15 मिनट की दौड़ें चाहिए।</string>
+    <string name="vo2_missing_rhr">आपकी आराम की हृदय गति चाहिए।</string>
+    <string name="vo2_missing_maxhr">COROS प्रोफ़ाइल में आपकी जन्मतिथि या अधिकतम हृदय गति दर्ज किया हुआ वर्कआउट चाहिए।</string>
+    <string name="vo2_explain_title">VO₂ max कैसे तय होता है</string>
+    <string name="vo2_explain_coros">यह मान COROS ने गणना किया है और बिना बदलाव के दिखाया गया है।</string>
+    <string name="vo2_explain_runs">यह अनुमान है, माप नहीं। हर उपयुक्त दौड़ (कम से कम 15 मिनट) के लिए आपकी गति पर ऑक्सीजन की खपत ACSM रनिंग समीकरण से निकाली जाती है और फिर इस हिसाब से बदली जाती है कि आपकी हृदय गति आराम और अधिकतम के बीच कहाँ थी। हाल की दौड़ों का माध्यिका मान दिखाया जाता है; असामान्य मान छोड़ दिए जाते हैं।</string>
+    <string name="vo2_explain_rhr">यह मोटा अनुमान है, माप नहीं। उपयुक्त दौड़ें न होने पर इसे अधिकतम और आराम की हृदय गति के अनुपात से निकाला जाता है (Uth विधि)। हृदय गति वाली दौड़ें बेहतर अनुमान देती हैं।</string>
+    <string name="vo2_explain_missing">अनुमान के लिए अभी पर्याप्त डेटा नहीं है। गढ़ा हुआ नंबर दिखाने के बजाय कोई नंबर नहीं दिखाया जाता।</string>
+
+    <string name="diag_version">ऐप संस्करण: %1$s</string>
+    <string name="diag_recognized">पहचाना गया डेटा</string>
+    <string name="diag_counts">हृदय गति: %1$d, तनाव: %2$d, HRV: %3$d रिकॉर्ड</string>
+    <string name="diag_sleep">नींद के हिस्से: %1$d</string>
+    <string name="diag_calc">गणना</string>
+    <string name="diag_calc_line">अभी %1$d, सुबह %2$d, +%3$d / −%4$d</string>
+    <string name="diag_vo2">VO₂ max: %1$s</string>
+    <string name="diag_tools">उपलब्ध COROS MCP टूल (%1$d)</string>
+    <string name="diag_calls">कॉल (%1$d)</string>
+    <string name="diag_call_error">(त्रुटि)</string>
+    <string name="diag_truncated">[… छोटा किया गया, कुल %1$d अक्षर …]</string>
+    <string name="diag_error">रीफ़्रेश त्रुटि (%1$s, संस्करण %2$s):</string>
+    <string name="diag_empty">अभी कोई डेटा नहीं।</string>
+</resources>

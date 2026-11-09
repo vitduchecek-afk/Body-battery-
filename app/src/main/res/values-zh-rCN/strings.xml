@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="charge_term">电量</string>
+    <string name="level_high">高</string>
+    <string name="level_medium">中</string>
+    <string name="level_low">低</string>
+    <string name="level_very_low">很低</string>
+
+    <string name="action_refresh">刷新</string>
+    <string name="action_settings">设置</string>
+    <string name="action_back">返回</string>
+    <string name="action_continue">继续</string>
+    <string name="action_cancel">取消</string>
+    <string name="action_ok">确定</string>
+
+    <string name="connect_button">连接 COROS</string>
+    <string name="connect_restart">重新登录</string>
+    <string name="status_pending">请在浏览器中完成登录，然后返回此处…</string>
+    <string name="status_not_connected">请连接您的 COROS 账户</string>
+    <string name="status_loading">正在从 COROS 加载数据…</string>
+    <string name="status_no_data">暂无数据</string>
+    <string name="status_updating">正在更新…</string>
+    <string name="status_updated">更新于 %1$s</string>
+    <string name="toast_connected">已连接 COROS</string>
+
+    <string name="stat_morning">早晨</string>
+    <string name="stat_charged">恢复</string>
+    <string name="stat_drained">消耗</string>
+    <string name="chart_title">今天</string>
+    <string name="chart_sleep">睡眠</string>
+    <string name="ring_cd">电量 %1$d/100</string>
+    <string name="ring_cd_unknown">电量未知</string>
+
+    <string name="note_wake_unknown">起床时间未知，按 7:00 计算</string>
+    <string name="note_no_sleep">没有睡眠数据，按睡到 7:00 计算</string>
+    <string name="note_low_data">连续压力数据较少，曲线仅供参考</string>
+    <string name="note_start_replayed">睡前电量根据前一天的数据推算</string>
+    <string name="note_start_default">睡前电量未知，从 %1$d 开始计算</string>
+
+    <string name="err_not_connected">未连接 COROS</string>
+    <string name="err_session_expired">登录已过期，请重新连接 COROS。</string>
+    <string name="err_login_none">没有正在进行的登录</string>
+    <string name="err_login_expired">登录已过期，请重试。</string>
+    <string name="err_login_failed">登录失败</string>
+    <string name="err_login_used">此登录已被使用，请重试。</string>
+    <string name="err_login_unexpected">登录时收到意外响应</string>
+    <string name="err_server">COROS 返回了错误</string>
+    <string name="err_network">无法连接 COROS，请检查网络连接。</string>
+    <string name="err_login_start">无法开始登录</string>
+    <string name="err_login_timeout">未能及时完成登录，请重试。</string>
+
+    <string name="widget_connect">连接</string>
+    <string name="widget_loading">加载中</string>
+    <string name="widget_desc">根据 COROS 数据计算的每日电量</string>
+
+    <string name="settings_title">设置</string>
+    <string name="settings_account">COROS 账户</string>
+    <string name="settings_connected">已连接，数据约每 15 分钟刷新一次</string>
+    <string name="settings_not_connected">未连接，请在主屏幕上连接</string>
+    <string name="settings_disconnect">断开 COROS</string>
+    <string name="toast_disconnected">已断开 COROS</string>
+
+    <string name="settings_notif_title">每日通知</string>
+    <string name="settings_notif_desc">每天显示一次您的电量。</string>
+    <string name="settings_notif_time">时间：%1$s</string>
+    <string name="notif_permission_title">允许通知</string>
+    <string name="notif_permission_text">为了显示每日电量，Android 需要您允许显示通知。任何数据都不会离开您的手机。</string>
+    <string name="notif_permission_denied">通知未被允许。您可以在系统设置中开启。</string>
+
+    <string name="settings_diag_title">诊断</string>
+    <string name="settings_diag_desc">应用最近一次从 COROS 收到的数据，便于排查问题。</string>
+    <string name="diag_show">显示</string>
+    <string name="diag_hide">隐藏</string>
+    <string name="diag_copy">复制</string>
+    <string name="toast_copied">已复制</string>
+
+    <string name="settings_about">关于</string>
+    <string name="about_independent">独立项目，与 COROS 和 Garmin 无关，也未获其认可。</string>
+    <string name="about_privacy">您的数据保留在这部手机上。应用只与 COROS 官方服务通信，不会向其他任何地方发送数据。</string>
+    <string name="about_version">版本 %1$s</string>
+
+    <string name="notif_channel_name">每日电量</string>
+    <string name="notif_channel_desc">每天一条通知，显示当前电量</string>
+    <string name="notif_today">今天：%1$d/100 · %2$s</string>
+    <string name="notif_last">最近一次（%1$s）：%2$d/100 · %3$s</string>
+
+    <string name="vo2_title">最大摄氧量</string>
+    <string name="vo2_unit">ml/kg/min</string>
+    <string name="vo2_source_coros">来自 COROS</string>
+    <string name="vo2_source_runs">根据您的跑步估算</string>
+    <string name="vo2_source_rhr">根据心率估算</string>
+    <string name="vo2_change">与上月相比 %1$s</string>
+    <string name="vo2_no_change">暂无与上月的对比</string>
+    <string name="vo2_no_data">数据不足</string>
+    <string name="vo2_missing_runs">需要至少 15 分钟且带心率的跑步记录。</string>
+    <string name="vo2_missing_rhr">需要您的静息心率。</string>
+    <string name="vo2_missing_maxhr">需要 COROS 个人资料中的出生日期，或记录了最大心率的训练。</string>
+    <string name="vo2_explain_title">最大摄氧量是如何得出的</string>
+    <string name="vo2_explain_coros">此数值由 COROS 计算，原样显示。</string>
+    <string name="vo2_explain_runs">这是估算值，不是测量值。对每次合适的跑步（至少 15 分钟），先用 ACSM 跑步公式计算该配速的耗氧量，再根据心率在静息心率与最大心率之间的位置进行换算。显示最近几次跑步的中位数，异常值会被忽略。</string>
+    <string name="vo2_explain_rhr">这是粗略估算，不是测量值。没有合适的跑步时，根据最大心率与静息心率之比计算（Uth 方法）。带心率的跑步能得到更好的估算。</string>
+    <string name="vo2_explain_missing">目前数据不足以进行估算。与其显示编造的数字，不如不显示。</string>
+
+    <string name="diag_version">应用版本：%1$s</string>
+    <string name="diag_recognized">识别到的数据</string>
+    <string name="diag_counts">心率：%1$d，压力：%2$d，HRV：%3$d 条记录</string>
+    <string name="diag_sleep">睡眠段数：%1$d</string>
+    <string name="diag_calc">计算</string>
+    <string name="diag_calc_line">当前 %1$d，早晨 %2$d，+%3$d / −%4$d</string>
+    <string name="diag_vo2">最大摄氧量：%1$s</string>
+    <string name="diag_tools">可用的 COROS MCP 工具（%1$d）</string>
+    <string name="diag_calls">调用（%1$d）</string>
+    <string name="diag_call_error">（错误）</string>
+    <string name="diag_truncated">[… 已截断，共 %1$d 个字符 …]</string>
+    <string name="diag_error">刷新出错（%1$s，版本 %2$s）：</string>
+    <string name="diag_empty">暂无数据。</string>
+</resources>

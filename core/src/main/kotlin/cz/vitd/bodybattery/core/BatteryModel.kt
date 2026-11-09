@@ -8,6 +8,9 @@ import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.pow
 
+/** Explanatory notes about the calculation; the app maps them to localized text. */
+enum class Note { WAKE_UNKNOWN, NO_SLEEP_DATA, LOW_DATA, START_REPLAYED, START_DEFAULT }
+
 data class BatteryResult(
     val level: Int,
     val wakeLevel: Int,
@@ -18,14 +21,14 @@ data class BatteryResult(
     val computedAt: Long,
     /** (epochSeconds, level) every 15 minutes from last night's sleep start to now. */
     val points: List<Pair<Long, Int>>,
-    val notes: List<String>,
+    val notes: List<Note>,
     val detailed: Boolean,
 ) {
     fun toJson(): JSONObject = JSONObject()
         .put("level", level).put("wakeLevel", wakeLevel).put("charged", charged).put("drained", drained)
         .put("sleepStart", sleepStart).put("wakeTime", wakeTime).put("computedAt", computedAt)
         .put("detailed", detailed)
-        .put("notes", JSONArray(notes))
+        .put("notes", JSONArray(notes.map { it.name }))
         .put("points", JSONArray().also { a -> points.forEach { a.put(JSONArray().put(it.first).put(it.second)) } })
 
     companion object {
@@ -37,7 +40,7 @@ data class BatteryResult(
                 drained = o.optInt("drained"), sleepStart = o.optLong("sleepStart"), wakeTime = o.optLong("wakeTime"),
                 computedAt = o.optLong("computedAt"),
                 points = (0 until pts.length()).map { pts.getJSONArray(it).let { p -> p.getLong(0) to p.getInt(1) } },
-                notes = (0 until notes.length()).map { notes.getString(it) },
+                notes = (0 until notes.length()).mapNotNull { i -> Note.entries.firstOrNull { it.name == notes.getString(i) } },
                 detailed = o.optBoolean("detailed"),
             )
         }
@@ -56,7 +59,7 @@ data class BatteryResult(
  */
 object BatteryModel {
     private const val STEP = 300L // 5 min
-    private const val DEFAULT_START = 30.0
+    const val DEFAULT_START = 30.0
     private const val DEFAULT_AWAKE_DRAIN_PER_H = 2.5
     private const val MIN_LEVEL = 5.0
     private const val SLEEP_K = 0.40      // sleep charge per hour per stress point below SLEEP_ZERO
@@ -67,7 +70,7 @@ object BatteryModel {
     fun compute(data: HealthData, now: ZonedDateTime, previousLevelAt: (Long) -> Int?): BatteryResult {
         val nowS = now.toEpochSecond()
         val zone = now.zone
-        val notes = mutableListOf<String>()
+        val notes = mutableListOf<Note>()
         val today = now.toLocalDate()
 
         // ---- last night's sleep
@@ -77,7 +80,7 @@ object BatteryModel {
         if (lastSleep == null) {
             val w = today.atTime(7, 0).atZone(zone).toEpochSecond().coerceAtMost(nowS)
             val minutes = data.sleepMinutes ?: 480.0
-            notes += if (data.sleepMinutes != null) "Čas probuzení neznámý – počítám s 7:00" else "Chybí data o spánku – počítám se spánkem do 7:00"
+            notes += if (data.sleepMinutes != null) Note.WAKE_UNKNOWN else Note.NO_SLEEP_DATA
             lastSleep = SleepPeriod(w - (minutes * 60).toLong(), w)
             sleeps += lastSleep
         }
@@ -90,7 +93,7 @@ object BatteryModel {
         val maxHr = data.maxHr ?: 190.0
         val todaysStress = stressSamples.count { it.epoch >= sleepStart }
         val detailed = todaysStress >= 12 || hrSamples.count { it.epoch >= sleepStart } >= 12
-        if (!detailed) notes += "Málo průběžných dat (stres) – průběh je odhad"
+        if (!detailed) notes += Note.LOW_DATA
 
         fun stressAt(t: Long): Double? {
             nearest(stressSamples, t, 20 * 60)?.let { return it }
@@ -154,10 +157,10 @@ object BatteryModel {
             // No stored history: replay the previous day from the sleep before (if we have its data).
             val earlier = sleeps.filter { it.end <= sleepStart - 6 * 3600 && it.start >= sleepStart - 40 * 3600 }.maxByOrNull { it.end }
             if (earlier != null && stressSamples.any { it.epoch in earlier.end..sleepStart }) {
-                notes += "Stav před spánkem dopočítán z předchozího dne"
+                notes += Note.START_REPLAYED
                 simulate(earlier.start, sleepStart, DEFAULT_START)
             } else {
-                notes += "Neznám stav před spánkem – začínám na ${DEFAULT_START.toInt()}"
+                notes += Note.START_DEFAULT
                 DEFAULT_START
             }
         }

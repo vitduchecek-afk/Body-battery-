@@ -23,6 +23,10 @@ class CorosTextParser(private val zone: ZoneId) {
     var hrvBaseline: Double? = null
     var restingHr: Double? = null
     val activities = mutableListOf<Activity>()
+    val runs = mutableListOf<RunSample>()
+    var corosVo2: Double? = null
+    var birthDate: LocalDate? = null
+    var observedMaxHr: Double? = null
 
     private val dayFmt = DateTimeFormatter.ISO_LOCAL_DATE
     private val dtFmt = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
@@ -41,6 +45,8 @@ class CorosTextParser(private val zone: ZoneId) {
             "queryRestingHeartRate" -> parseRestingHr(text)
             "queryDailyHealthData" -> parseDaily(text)
             "querySportRecords" -> parseSportRecords(text)
+            "queryFitnessAssessmentOverview" -> parseFitness(text)
+            "queryUserInfo" -> parseUserInfo(text)
         }
     }
 
@@ -106,19 +112,45 @@ class CorosTextParser(private val zone: ZoneId) {
     private fun parseSportRecords(text: String) {
         val blocks = text.split(Regex("""\n\s*\n|\n(?=\s*\d+[.)]\s)|\n(?=-{2,})"""))
         val startRe = Regex("""(\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2})""")
-        val durRe = Regex("""(?i)(?:duration|time|total time)\s*[:=]\s*([^\n|,]+)""")
+        val durRe = Regex("""(?i)\b(?:duration|total\s*time|elapsed\s*time|moving\s*time|workout\s*time)\s*[:=]\s*([^\n|,]+)""")
         val loadRe = Regex("""(?i)(?:training\s*load|load)\s*[:=]\s*(\d+(?:\.\d+)?)""")
-        val avgHrRe = Regex("""(?i)(?:avg|average)\s*(?:hr|heart\s*rate)\s*[:=]\s*(\d+)""")
+        val avgHrRe = Regex("""(?i)(?:avg|average)\.?\s*(?:hr|heart\s*rate)\s*[:=]\s*(\d+)""")
+        val maxHrRe = Regex("""(?i)max\.?\s*(?:hr|heart\s*rate)\s*[:=]\s*(\d+)""")
+        val distRe = Regex("""(?i)distance\s*[:=]\s*([\d.,]+)\s*(km|mi|m)\b""")
+        val runRe = Regex("""(?i)(\brun\b|\brunning\b|sport\s*type\s*[:=]\s*10[0-3]\b|sportType\s*=\s*10[0-3]\b)""")
         for (b in blocks) {
+            maxHrRe.find(b)?.groupValues?.get(1)?.toDoubleOrNull()?.let { observedMaxHr = maxOf(observedMaxHr ?: 0.0, it) }
             val start = startRe.find(b)?.groupValues?.get(1)?.replace('T', ' ')?.let { parseLocal(it) } ?: continue
             val dur = durRe.find(b)?.groupValues?.get(1)?.let { durationMinutes(it) } ?: continue
             if (dur < 2 || dur > 12 * 60) continue
+            val avgHr = avgHrRe.find(b)?.groupValues?.get(1)?.toDoubleOrNull()
             activities += Activity(
                 start = start,
                 durationSec = (dur * 60).toLong(),
                 trainingLoad = loadRe.find(b)?.groupValues?.get(1)?.toDoubleOrNull(),
-                avgHr = avgHrRe.find(b)?.groupValues?.get(1)?.toDoubleOrNull(),
+                avgHr = avgHr,
             )
+            val dist = distRe.find(b)?.let { m ->
+                val v = m.groupValues[1].replace(',', '.').toDoubleOrNull() ?: return@let null
+                when (m.groupValues[2].lowercase()) { "km" -> v * 1000; "mi" -> v * 1609.344; else -> v }
+            }
+            if (runRe.containsMatchIn(b) && dist != null && avgHr != null) {
+                runs += RunSample(start, (dur * 60).toLong(), dist, avgHr)
+            }
+        }
+    }
+
+    /** queryFitnessAssessmentOverview: "VO2max: 52" (any similar wording). */
+    private fun parseFitness(text: String) {
+        Regex("""(?i)VO\s*[2₂]\s*[-_ ]?max[^0-9\n]{0,24}(\d{2}(?:[.,]\d+)?)""").find(text)?.let {
+            corosVo2 = it.groupValues[1].replace(',', '.').toDoubleOrNull()
+        }
+    }
+
+    /** queryUserInfo: birthday as yyyy-MM-dd or yyyyMMdd. */
+    private fun parseUserInfo(text: String) {
+        Regex("""(?i)birth\w*\s*[:=]\s*(\d{4})[-/.]?(\d{2})[-/.]?(\d{2})""").find(text)?.let { m ->
+            birthDate = runCatching { LocalDate.of(m.groupValues[1].toInt(), m.groupValues[2].toInt(), m.groupValues[3].toInt()) }.getOrNull()
         }
     }
 

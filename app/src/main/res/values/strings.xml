@@ -1,5 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Body Battery</string>
-    <string name="widget_desc">Body battery vypočtená z dat COROS</string>
+    <!-- The visible app name lives only here. -->
+    <string name="app_name" translatable="false">Charge for COROS</string>
+
+    <!-- Language-neutral formats -->
+    <string name="fmt_plus" translatable="false">+%1$d</string>
+    <string name="fmt_minus" translatable="false">−%1$d</string>
+    <string name="fmt_range" translatable="false">%1$s–%2$s</string>
+    <string name="fmt_tooltip" translatable="false">%1$d · %2$s</string>
+    <string name="fmt_detail" translatable="false">%1$s (%2$s)</string>
+    <string name="fmt_vo2" translatable="false">%1$.1f</string>
+    <string name="fmt_vo2_delta" translatable="false">%1$+.1f</string>
+
+    <string name="charge_term">Charge</string>
+    <string name="level_high">High</string>
+    <string name="level_medium">Medium</string>
+    <string name="level_low">Low</string>
+    <string name="level_very_low">Very low</string>
+
+    <string name="action_refresh">Refresh</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_back">Back</string>
+    <string name="action_continue">Continue</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_ok">OK</string>
+
+    <string name="connect_button">Connect COROS</string>
+    <string name="connect_restart">Restart sign-in</string>
+    <string name="status_pending">Finish signing in in your browser, then come back here…</string>
+    <string name="status_not_connected">Connect your COROS account</string>
+    <string name="status_loading">Loading data from COROS…</string>
+    <string name="status_no_data">No data yet</string>
+    <string name="status_updating">Updating…</string>
+    <string name="status_updated">Updated %1$s</string>
+    <string name="toast_connected">COROS connected</string>
+
+    <string name="stat_morning">Morning</string>
+    <string name="stat_charged">Charged</string>
+    <string name="stat_drained">Drained</string>
+    <string name="chart_title">Today</string>
+    <string name="chart_sleep">Sleep</string>
+    <string name="ring_cd">Charge %1$d of 100</string>
+    <string name="ring_cd_unknown">Charge unknown</string>
+
+    <string name="note_wake_unknown">Wake-up time unknown – assuming 7:00</string>
+    <string name="note_no_sleep">No sleep data – assuming sleep until 7:00</string>
+    <string name="note_low_data">Little continuous stress data – the curve is approximate</string>
+    <string name="note_start_replayed">Level before sleep derived from the previous day</string>
+    <string name="note_start_default">Level before sleep unknown – starting at %1$d</string>
+
+    <string name="err_not_connected">Not connected to COROS</string>
+    <string name="err_session_expired">Your sign-in has expired. Please connect COROS again.</string>
+    <string name="err_login_none">No sign-in in progress</string>
+    <string name="err_login_expired">Sign-in expired. Please try again.</string>
+    <string name="err_login_failed">Sign-in failed</string>
+    <string name="err_login_used">This sign-in was already used. Please try again.</string>
+    <string name="err_login_unexpected">Unexpected response during sign-in</string>
+    <string name="err_server">COROS returned an error</string>
+    <string name="err_network">Could not reach COROS. Check your internet connection.</string>
+    <string name="err_login_start">Could not start the sign-in</string>
+    <string name="err_login_timeout">Sign-in was not completed in time. Please try again.</string>
+
+    <string name="widget_connect">connect</string>
+    <string name="widget_loading">loading</string>
+    <string name="widget_desc">Your daily charge calculated from COROS data</string>
+
+    <string name="settings_title">Settings</string>
+    <string name="settings_account">COROS account</string>
+    <string name="settings_connected">Connected – data refreshes about every 15 minutes</string>
+    <string name="settings_not_connected">Not connected – connect on the main screen</string>
+    <string name="settings_disconnect">Disconnect COROS</string>
+    <string name="toast_disconnected">COROS disconnected</string>
+
+    <string name="settings_notif_title">Daily notification</string>
+    <string name="settings_notif_desc">Shows your charge once a day.</string>
+    <string name="settings_notif_time">Time: %1$s</string>
+    <string name="notif_permission_title">Allow notifications</string>
+    <string name="notif_permission_text">To show your daily charge, Android needs your permission to display notifications. Nothing leaves your phone.</string>
+    <string name="notif_permission_denied">Notifications are not allowed. You can enable them in the system settings.</string>
+
+    <string name="settings_diag_title">Diagnostics</string>
+    <string name="settings_diag_desc">The data the app last received from COROS. Useful for troubleshooting.</string>
+    <string name="diag_show">Show</string>
+    <string name="diag_hide">Hide</string>
+    <string name="diag_copy">Copy</string>
+    <string name="toast_copied">Copied</string>
+
+    <string name="settings_about">About</string>
+    <string name="about_independent">Independent project. Not affiliated with, endorsed by or connected to COROS or Garmin.</string>
+    <string name="about_privacy">Your data stays on this phone. The app only talks to the official COROS service and sends nothing anywhere else.</string>
+    <string name="about_version">Version %1$s</string>
+
+    <string name="notif_channel_name">Daily charge</string>
+    <string name="notif_channel_desc">One notification a day with your current charge</string>
+    <string name="notif_today">Today: %1$d/100 · %2$s</string>
+    <string name="notif_last">Last known (%1$s): %2$d/100 · %3$s</string>
+
+    <string name="vo2_title">VO₂ max</string>
+    <string name="vo2_unit">ml/kg/min</string>
+    <string name="vo2_source_coros">From COROS</string>
+    <string name="vo2_source_runs">Estimate from your runs</string>
+    <string name="vo2_source_rhr">Estimate from heart rate</string>
+    <string name="vo2_change">%1$s vs. last month</string>
+    <string name="vo2_no_change">No comparison with last month yet</string>
+    <string name="vo2_no_data">Not enough data</string>
+    <string name="vo2_missing_runs">Needs runs of at least 15 minutes with heart rate.</string>
+    <string name="vo2_missing_rhr">Needs your resting heart rate.</string>
+    <string name="vo2_missing_maxhr">Needs your birth date in the COROS profile, or a workout with a recorded maximum heart rate.</string>
+    <string name="vo2_explain_title">How VO₂ max is determined</string>
+    <string name="vo2_explain_coros">This value is calculated by COROS and shown unchanged.</string>
+    <string name="vo2_explain_runs">This is an estimate, not a measurement. For each suitable run (at least 15 minutes) the oxygen cost of your pace is calculated with the ACSM running equation and scaled by how hard your heart was working compared to your resting and maximum heart rate. The median of your recent runs is shown; unusual values are ignored.</string>
+    <string name="vo2_explain_rhr">This is a rough estimate, not a measurement. Without suitable runs it is calculated from the ratio of your maximum to resting heart rate (Uth method). Runs with heart rate give a better estimate.</string>
+    <string name="vo2_explain_missing">There is not enough data for an estimate yet. No number is shown rather than a made-up one.</string>
+
+    <string name="diag_version">App version: %1$s</string>
+    <string name="diag_recognized">Recognized data</string>
+    <string name="diag_counts">Heart rate: %1$d, stress: %2$d, HRV: %3$d samples</string>
+    <string name="diag_sleep">Sleep periods: %1$d</string>
+    <string name="diag_calc">Calculation</string>
+    <string name="diag_calc_line">Now %1$d, morning %2$d, +%3$d / −%4$d</string>
+    <string name="diag_vo2">VO₂ max: %1$s</string>
+    <string name="diag_tools">Available COROS MCP tools (%1$d)</string>
+    <string name="diag_calls">Calls (%1$d)</string>
+    <string name="diag_call_error">(error)</string>
+    <string name="diag_truncated">[… truncated, %1$d characters in total …]</string>
+    <string name="diag_error">Refresh error (%1$s, version %2$s):</string>
+    <string name="diag_empty">No data yet.</string>
 </resources>

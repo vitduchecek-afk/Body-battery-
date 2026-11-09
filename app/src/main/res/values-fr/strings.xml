@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="charge_term">Charge</string>
+    <string name="level_high">Élevée</string>
+    <string name="level_medium">Moyenne</string>
+    <string name="level_low">Faible</string>
+    <string name="level_very_low">Très faible</string>
+
+    <string name="action_refresh">Actualiser</string>
+    <string name="action_settings">Paramètres</string>
+    <string name="action_back">Retour</string>
+    <string name="action_continue">Continuer</string>
+    <string name="action_cancel">Annuler</string>
+    <string name="action_ok">OK</string>
+
+    <string name="connect_button">Connecter COROS</string>
+    <string name="connect_restart">Recommencer la connexion</string>
+    <string name="status_pending">Terminez la connexion dans le navigateur, puis revenez ici…</string>
+    <string name="status_not_connected">Connectez votre compte COROS</string>
+    <string name="status_loading">Chargement des données COROS…</string>
+    <string name="status_no_data">Aucune donnée pour l’instant</string>
+    <string name="status_updating">Mise à jour…</string>
+    <string name="status_updated">Mis à jour à %1$s</string>
+    <string name="toast_connected">COROS connecté</string>
+
+    <string name="stat_morning">Matin</string>
+    <string name="stat_charged">Rechargé</string>
+    <string name="stat_drained">Dépensé</string>
+    <string name="chart_title">Aujourd’hui</string>
+    <string name="chart_sleep">Sommeil</string>
+    <string name="ring_cd">Charge %1$d sur 100</string>
+    <string name="ring_cd_unknown">Charge inconnue</string>
+
+    <string name="note_wake_unknown">Heure de réveil inconnue – 7:00 supposé</string>
+    <string name="note_no_sleep">Pas de données de sommeil – sommeil supposé jusqu’à 7:00</string>
+    <string name="note_low_data">Peu de données de stress continues – la courbe est approximative</string>
+    <string name="note_start_replayed">Niveau avant le sommeil calculé à partir de la veille</string>
+    <string name="note_start_default">Niveau avant le sommeil inconnu – départ à %1$d</string>
+
+    <string name="err_not_connected">Non connecté à COROS</string>
+    <string name="err_session_expired">Votre connexion a expiré. Veuillez reconnecter COROS.</string>
+    <string name="err_login_none">Aucune connexion en cours</string>
+    <string name="err_login_expired">La connexion a expiré. Veuillez réessayer.</string>
+    <string name="err_login_failed">Échec de la connexion</string>
+    <string name="err_login_used">Cette connexion a déjà été utilisée. Veuillez réessayer.</string>
+    <string name="err_login_unexpected">Réponse inattendue lors de la connexion</string>
+    <string name="err_server">COROS a renvoyé une erreur</string>
+    <string name="err_network">Impossible de joindre COROS. Vérifiez votre connexion Internet.</string>
+    <string name="err_login_start">Impossible de démarrer la connexion</string>
+    <string name="err_login_timeout">La connexion n’a pas été terminée à temps. Veuillez réessayer.</string>
+
+    <string name="widget_connect">connecter</string>
+    <string name="widget_loading">chargement</string>
+    <string name="widget_desc">Votre charge quotidienne calculée à partir des données COROS</string>
+
+    <string name="settings_title">Paramètres</string>
+    <string name="settings_account">Compte COROS</string>
+    <string name="settings_connected">Connecté – les données sont actualisées environ toutes les 15 minutes</string>
+    <string name="settings_not_connected">Non connecté – connectez-vous depuis l’écran principal</string>
+    <string name="settings_disconnect">Déconnecter COROS</string>
+    <string name="toast_disconnected">COROS déconnecté</string>
+
+    <string name="settings_notif_title">Notification quotidienne</string>
+    <string name="settings_notif_desc">Affiche votre charge une fois par jour.</string>
+    <string name="settings_notif_time">Heure : %1$s</string>
+    <string name="notif_permission_title">Autoriser les notifications</string>
+    <string name="notif_permission_text">Pour afficher votre charge quotidienne, Android a besoin de votre autorisation pour les notifications. Rien ne quitte votre téléphone.</string>
+    <string name="notif_permission_denied">Les notifications ne sont pas autorisées. Vous pouvez les activer dans les paramètres du système.</string>
+
+    <string name="settings_diag_title">Diagnostic</string>
+    <string name="settings_diag_desc">Les données reçues de COROS lors de la dernière actualisation. Utile en cas de problème.</string>
+    <string name="diag_show">Afficher</string>
+    <string name="diag_hide">Masquer</string>
+    <string name="diag_copy">Copier</string>
+    <string name="toast_copied">Copié</string>
+
+    <string name="settings_about">À propos</string>
+    <string name="about_independent">Projet indépendant. Sans lien avec COROS ni Garmin, ni approuvé par eux.</string>
+    <string name="about_privacy">Vos données restent sur ce téléphone. L’application communique uniquement avec le service officiel COROS et n’envoie rien ailleurs.</string>
+    <string name="about_version">Version %1$s</string>
+
+    <string name="notif_channel_name">Charge quotidienne</string>
+    <string name="notif_channel_desc">Une notification par jour avec votre charge actuelle</string>
+    <string name="notif_today">Aujourd’hui : %1$d/100 · %2$s</string>
+    <string name="notif_last">Dernière valeur (%1$s) : %2$d/100 · %3$s</string>
+
+    <string name="vo2_title">VO₂ max</string>
+    <string name="vo2_unit">ml/kg/min</string>
+    <string name="vo2_source_coros">Fourni par COROS</string>
+    <string name="vo2_source_runs">Estimation d’après vos courses</string>
+    <string name="vo2_source_rhr">Estimation d’après la fréquence cardiaque</string>
+    <string name="vo2_change">%1$s par rapport au mois dernier</string>
+    <string name="vo2_no_change">Pas encore de comparaison avec le mois dernier</string>
+    <string name="vo2_no_data">Données insuffisantes</string>
+    <string name="vo2_missing_runs">Nécessite des courses d’au moins 15 minutes avec fréquence cardiaque.</string>
+    <string name="vo2_missing_rhr">Nécessite votre fréquence cardiaque au repos.</string>
+    <string name="vo2_missing_maxhr">Nécessite votre date de naissance dans le profil COROS ou une séance avec fréquence cardiaque maximale enregistrée.</string>
+    <string name="vo2_explain_title">Comment la VO₂ max est déterminée</string>
+    <string name="vo2_explain_coros">Cette valeur est calculée par COROS et affichée telle quelle.</string>
+    <string name="vo2_explain_runs">Il s’agit d’une estimation, pas d’une mesure. Pour chaque course adaptée (au moins 15 minutes), la consommation d’oxygène liée à votre allure est calculée avec l’équation de course de l’ACSM, puis ajustée selon l’effort de votre cœur entre vos fréquences cardiaques de repos et maximale. La médiane de vos dernières courses est affichée ; les valeurs inhabituelles sont ignorées.</string>
+    <string name="vo2_explain_rhr">Il s’agit d’une estimation grossière, pas d’une mesure. Sans course adaptée, elle est calculée à partir du rapport entre votre fréquence cardiaque maximale et de repos (méthode Uth). Des courses avec fréquence cardiaque donnent une meilleure estimation.</string>
+    <string name="vo2_explain_missing">Il n’y a pas encore assez de données pour une estimation. Mieux vaut n’afficher aucun chiffre qu’un chiffre inventé.</string>
+
+    <string name="diag_version">Version de l’application : %1$s</string>
+    <string name="diag_recognized">Données reconnues</string>
+    <string name="diag_counts">Fréquence cardiaque : %1$d, stress : %2$d, VFC : %3$d mesures</string>
+    <string name="diag_sleep">Périodes de sommeil : %1$d</string>
+    <string name="diag_calc">Calcul</string>
+    <string name="diag_calc_line">Maintenant %1$d, matin %2$d, +%3$d / −%4$d</string>
+    <string name="diag_vo2">VO₂ max : %1$s</string>
+    <string name="diag_tools">Outils COROS MCP disponibles (%1$d)</string>
+    <string name="diag_calls">Appels (%1$d)</string>
+    <string name="diag_call_error">(erreur)</string>
+    <string name="diag_truncated">[… tronqué, %1$d caractères au total …]</string>
+    <string name="diag_error">Erreur d’actualisation (%1$s, version %2$s) :</string>
+    <string name="diag_empty">Aucune donnée pour l’instant.</string>
+</resources>

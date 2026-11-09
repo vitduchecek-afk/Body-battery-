@@ -9,22 +9,21 @@ import android.graphics.RectF
 import android.graphics.Typeface
 
 object RingRenderer {
-    fun colorFor(level: Int): Int = when {
-        level >= 76 -> Color.rgb(0x2F, 0x80, 0xED)
-        level >= 51 -> Color.rgb(0x27, 0xAE, 0x9F)
-        level >= 26 -> Color.rgb(0xF2, 0x99, 0x4A)
-        else -> Color.rgb(0xEB, 0x57, 0x57)
-    }
+    // Same values as charge_* in colors.xml (mint → lime → amber → coral).
+    private val HIGH = Color.rgb(0x3D, 0xDC, 0x97)
+    private val MEDIUM = Color.rgb(0xB5, 0xE3, 0x5A)
+    private val LOW = Color.rgb(0xF5, 0xB0, 0x41)
+    private val VERY_LOW = Color.rgb(0xF0, 0x60, 0x5D)
 
-    fun labelFor(level: Int): String = when {
-        level >= 76 -> "Vysoká"
-        level >= 51 -> "Střední"
-        level >= 26 -> "Nízká"
-        else -> "Velmi nízká"
+    fun colorFor(level: Int): Int = when {
+        level >= 76 -> HIGH
+        level >= 51 -> MEDIUM
+        level >= 26 -> LOW
+        else -> VERY_LOW
     }
 
     /**
-     * Draws the battery ring with the number in the middle.
+     * Draws the charge ring with the number in the middle.
      * [level] null = no data. [caption] small text under the number. [glow] soft glow (app only).
      */
     fun render(sizePx: Int, level: Int?, caption: String?, glow: Boolean = false): Bitmap {
@@ -63,8 +62,13 @@ object RingRenderer {
         if (caption != null) {
             val small = Paint(Paint.ANTI_ALIAS_FLAG).apply {
                 color = if (level != null && glow) colorFor(level) else Color.argb(200, 255, 255, 255)
-                textAlign = Paint.Align.CENTER; textSize = sizePx * 0.075f
+                textAlign = Paint.Align.CENTER
                 typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
+                textSize = sizePx * 0.075f
+                // shrink long captions (some languages) to fit inside the ring
+                val maxW = sizePx * 0.5f
+                val w = measureText(caption)
+                if (w > maxW) textSize *= maxW / w
             }
             c.drawText(caption, sizePx / 2f, sizePx * 0.86f, small)
         }

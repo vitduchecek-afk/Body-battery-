@@ -32,22 +32,11 @@ data class HealthData(
     val restingHr: Double? = null,
     val maxHr: Double? = null,
     val activities: List<Activity> = emptyList(),
+    val runs: List<RunSample> = emptyList(),
+    val corosVo2: Double? = null,
+    val birthDate: LocalDate? = null,
+    val observedMaxHr: Double? = null,
 ) {
-    fun describe(): String = buildString {
-        val byKind = samples.groupBy { it.kind }
-        append("Tep: ${byKind[SampleKind.HR]?.size ?: 0} záznamů, ")
-        append("stres: ${byKind[SampleKind.STRESS]?.size ?: 0} záznamů, ")
-        append("HRV: ${byKind[SampleKind.HRV]?.size ?: 0} záznamů\n")
-        append("Spánek: ${sleeps.size} úseků")
-        sleepMinutes?.let { append(", délka ${"%.0f".format(it)} min") }
-        sleepScore?.let { append(", skóre ${"%.0f".format(it)}") }
-        append("\n")
-        hrvNight?.let { append("HRV noc: ${"%.0f".format(it)}") }
-        hrvBaseline?.let { append(" (normál ${"%.0f".format(it)})") }
-        restingHr?.let { append("  Klidový tep: ${"%.0f".format(it)}") }
-        maxHr?.let { append("  Max tep: ${"%.0f".format(it)}") }
-        append("\nAktivity: ${activities.size}")
-    }
 }
 
 /**
@@ -99,6 +88,10 @@ class DataExtractor(private val zone: ZoneId) {
             restingHr = tp.restingHr ?: restingHr,
             maxHr = maxHr,
             activities = activities.values.sortedBy { it.start },
+            runs = tp.runs.distinctBy { it.start }.sortedBy { it.start },
+            corosVo2 = tp.corosVo2,
+            birthDate = tp.birthDate,
+            observedMaxHr = tp.observedMaxHr,
         )
     }
 

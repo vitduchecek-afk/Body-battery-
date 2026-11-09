@@ -6,9 +6,6 @@ import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
 import android.widget.RemoteViews
-import java.time.Instant
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
 
 class BatteryWidget : AppWidgetProvider() {
     override fun onUpdate(context: Context, manager: AppWidgetManager, ids: IntArray) {
@@ -22,8 +19,6 @@ class BatteryWidget : AppWidgetProvider() {
     }
 
     companion object {
-        private val TIME = DateTimeFormatter.ofPattern("HH:mm")
-
         fun updateAll(context: Context) {
             val manager = AppWidgetManager.getInstance(context)
             render(context, manager, Repo.widgetIds(context))
@@ -34,19 +29,20 @@ class BatteryWidget : AppWidgetProvider() {
             val result = Repo.lastResult(context)
             val loggedIn = Repo.client(context).isLoggedIn()
             val caption = when {
-                !loggedIn -> "připojit"
-                result == null -> "načítám"
-                else -> Instant.ofEpochSecond(result.computedAt).atZone(ZoneId.systemDefault()).format(TIME)
+                !loggedIn -> context.getString(R.string.widget_connect)
+                result == null -> context.getString(R.string.widget_loading)
+                else -> Texts.time(context, result.computedAt)
             }
             val bmp = RingRenderer.render(360, result?.level, caption)
             val open = PendingIntent.getActivity(
                 context, 0, Intent(context, MainActivity::class.java),
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
             )
+            val cd = result?.let { context.getString(R.string.ring_cd, it.level) } ?: context.getString(R.string.ring_cd_unknown)
             for (id in ids) {
                 val views = RemoteViews(context.packageName, R.layout.widget)
                 views.setImageViewBitmap(R.id.widget_ring, bmp)
-                views.setContentDescription(R.id.widget_ring, "Body battery ${result?.level ?: "neznámá"}")
+                views.setContentDescription(R.id.widget_ring, cd)
                 views.setOnClickPendingIntent(R.id.widget_root, open)
                 manager.updateAppWidget(id, views)
             }

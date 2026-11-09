@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="charge_term">Nabití</string>
+    <string name="level_high">Vysoké</string>
+    <string name="level_medium">Střední</string>
+    <string name="level_low">Nízké</string>
+    <string name="level_very_low">Velmi nízké</string>
+
+    <string name="action_refresh">Obnovit</string>
+    <string name="action_settings">Nastavení</string>
+    <string name="action_back">Zpět</string>
+    <string name="action_continue">Pokračovat</string>
+    <string name="action_cancel">Zrušit</string>
+    <string name="action_ok">OK</string>
+
+    <string name="connect_button">Připojit COROS</string>
+    <string name="connect_restart">Začít přihlášení znovu</string>
+    <string name="status_pending">Dokončete přihlášení v prohlížeči a vraťte se sem…</string>
+    <string name="status_not_connected">Připojte svůj účet COROS</string>
+    <string name="status_loading">Načítám data z COROS…</string>
+    <string name="status_no_data">Zatím žádná data</string>
+    <string name="status_updating">Aktualizuji…</string>
+    <string name="status_updated">Aktualizováno %1$s</string>
+    <string name="toast_connected">COROS připojen</string>
+
+    <string name="stat_morning">Ráno</string>
+    <string name="stat_charged">Nabito</string>
+    <string name="stat_drained">Vybito</string>
+    <string name="chart_title">Dnes</string>
+    <string name="chart_sleep">Spánek</string>
+    <string name="ring_cd">Nabití %1$d ze 100</string>
+    <string name="ring_cd_unknown">Nabití neznámé</string>
+
+    <string name="note_wake_unknown">Čas probuzení neznámý – počítám se 7:00</string>
+    <string name="note_no_sleep">Chybí data o spánku – počítám se spánkem do 7:00</string>
+    <string name="note_low_data">Málo průběžných dat o stresu – průběh je přibližný</string>
+    <string name="note_start_replayed">Stav před spánkem dopočítán z předchozího dne</string>
+    <string name="note_start_default">Stav před spánkem neznámý – začínám na %1$d</string>
+
+    <string name="err_not_connected">Nejste připojeni k COROS</string>
+    <string name="err_session_expired">Přihlášení vypršelo. Připojte COROS znovu.</string>
+    <string name="err_login_none">Žádné rozpracované přihlášení</string>
+    <string name="err_login_expired">Přihlášení vypršelo. Zkuste to znovu.</string>
+    <string name="err_login_failed">Přihlášení selhalo</string>
+    <string name="err_login_used">Toto přihlášení už bylo použito. Zkuste to znovu.</string>
+    <string name="err_login_unexpected">Neočekávaná odpověď při přihlášení</string>
+    <string name="err_server">COROS vrátil chybu</string>
+    <string name="err_network">Nepodařilo se spojit s COROS. Zkontrolujte připojení k internetu.</string>
+    <string name="err_login_start">Nepodařilo se zahájit přihlášení</string>
+    <string name="err_login_timeout">Přihlášení nebylo dokončeno včas. Zkuste to znovu.</string>
+
+    <string name="widget_connect">připojit</string>
+    <string name="widget_loading">načítám</string>
+    <string name="widget_desc">Denní nabití vypočtené z dat COROS</string>
+
+    <string name="settings_title">Nastavení</string>
+    <string name="settings_account">Účet COROS</string>
+    <string name="settings_connected">Připojeno – data se obnovují zhruba každých 15 minut</string>
+    <string name="settings_not_connected">Nepřipojeno – připojte se na hlavní obrazovce</string>
+    <string name="settings_disconnect">Odpojit COROS</string>
+    <string name="toast_disconnected">COROS odpojen</string>
+
+    <string name="settings_notif_title">Denní notifikace</string>
+    <string name="settings_notif_desc">Jednou denně ukáže vaše nabití.</string>
+    <string name="settings_notif_time">Čas: %1$s</string>
+    <string name="notif_permission_title">Povolit notifikace</string>
+    <string name="notif_permission_text">Aby mohla aplikace ukázat denní nabití, potřebuje Android vaše svolení k zobrazování notifikací. Nic neopouští váš telefon.</string>
+    <string name="notif_permission_denied">Notifikace nejsou povolené. Můžete je zapnout v nastavení systému.</string>
+
+    <string name="settings_diag_title">Diagnostika</string>
+    <string name="settings_diag_desc">Data, která aplikace naposledy dostala od COROS. Hodí se při řešení problémů.</string>
+    <string name="diag_show">Zobrazit</string>
+    <string name="diag_hide">Skrýt</string>
+    <string name="diag_copy">Kopírovat</string>
+    <string name="toast_copied">Zkopírováno</string>
+
+    <string name="settings_about">O aplikaci</string>
+    <string name="about_independent">Nezávislý projekt. Není spojený s COROS ani Garminem, ani jimi podporovaný.</string>
+    <string name="about_privacy">Vaše data zůstávají v tomto telefonu. Aplikace komunikuje jen s oficiální službou COROS a nic nikam jinam neposílá.</string>
+    <string name="about_version">Verze %1$s</string>
+
+    <string name="notif_channel_name">Denní nabití</string>
+    <string name="notif_channel_desc">Jedna notifikace denně s aktuálním nabitím</string>
+    <string name="notif_today">Dnes: %1$d/100 · %2$s</string>
+    <string name="notif_last">Naposledy (%1$s): %2$d/100 · %3$s</string>
+
+    <string name="vo2_title">VO₂ max</string>
+    <string name="vo2_unit">ml/kg/min</string>
+    <string name="vo2_source_coros">Z COROS</string>
+    <string name="vo2_source_runs">Odhad z vašich běhů</string>
+    <string name="vo2_source_rhr">Odhad z tepové frekvence</string>
+    <string name="vo2_change">%1$s oproti minulému měsíci</string>
+    <string name="vo2_no_change">Zatím bez srovnání s minulým měsícem</string>
+    <string name="vo2_no_data">Nedostatek dat</string>
+    <string name="vo2_missing_runs">Chybí běhy delší než 15 minut se záznamem tepu.</string>
+    <string name="vo2_missing_rhr">Chybí klidová tepová frekvence.</string>
+    <string name="vo2_missing_maxhr">Chybí datum narození v profilu COROS nebo trénink se zaznamenaným maximálním tepem.</string>
+    <string name="vo2_explain_title">Jak se VO₂ max určuje</string>
+    <string name="vo2_explain_coros">Tuto hodnotu spočítal COROS a zobrazuje se beze změny.</string>
+    <string name="vo2_explain_runs">Jde o odhad, ne o měření. U každého vhodného běhu (aspoň 15 minut) se z tempa spočítá spotřeba kyslíku podle běžecké rovnice ACSM a přepočítá se podle toho, jak vysoko byl tep mezi klidovým a maximálním. Zobrazuje se medián posledních běhů, neobvyklé hodnoty se vynechávají.</string>
+    <string name="vo2_explain_rhr">Jde o hrubý odhad, ne o měření. Bez vhodných běhů se počítá z poměru maximálního a klidového tepu (metoda Uth). Běhy se záznamem tepu dají přesnější odhad.</string>
+    <string name="vo2_explain_missing">Pro odhad zatím není dost dat. Raději nezobrazujeme žádné číslo než vymyšlené.</string>
+
+    <string name="diag_version">Verze aplikace: %1$s</string>
+    <string name="diag_recognized">Rozpoznaná data</string>
+    <string name="diag_counts">Tep: %1$d, stres: %2$d, HRV: %3$d záznamů</string>
+    <string name="diag_sleep">Úseky spánku: %1$d</string>
+    <string name="diag_calc">Výpočet</string>
+    <string name="diag_calc_line">Teď %1$d, ráno %2$d, +%3$d / −%4$d</string>
+    <string name="diag_vo2">VO₂ max: %1$s</string>
+    <string name="diag_tools">Dostupné nástroje COROS MCP (%1$d)</string>
+    <string name="diag_calls">Volání (%1$d)</string>
+    <string name="diag_call_error">(chyba)</string>
+    <string name="diag_truncated">[… zkráceno, celkem %1$d znaků …]</string>
+    <string name="diag_error">Chyba při obnově (%1$s, verze %2$s):</string>
+    <string name="diag_empty">Zatím žádná data.</string>
+</resources>

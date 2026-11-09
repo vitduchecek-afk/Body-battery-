@@ -96,7 +96,7 @@ class RealFormatTest {
         val r = BatteryModel.compute(d, now) { null }
         println("level=${r.level} wake=${r.wakeLevel} +${r.charged} -${r.drained} notes=${r.notes}")
         assertTrue(r.detailed)
-        assertTrue(r.notes.any { it.contains("předchozího dne") })
+        assertTrue(Note.START_REPLAYED in r.notes)
         assertTrue("wake ${r.wakeLevel}", r.wakeLevel in 60..100)
         assertTrue("level ${r.level}", r.level in 20 until r.wakeLevel)
     }

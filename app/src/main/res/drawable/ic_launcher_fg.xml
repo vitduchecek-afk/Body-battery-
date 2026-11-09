@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Open charge ring with a spark. Safe zone: 66dp circle in the 108dp canvas. -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="108dp" android:height="108dp"
     android:viewportWidth="108" android:viewportHeight="108">
-    <path android:strokeColor="#33FFFFFF" android:strokeWidth="7" android:strokeLineCap="round"
-        android:pathData="M39.5,68.5 A21,21 0 1,1 68.5,68.5" />
-    <path android:strokeColor="#2F80ED" android:strokeWidth="7" android:strokeLineCap="round"
-        android:pathData="M39.5,68.5 A21,21 0 0,1 54,33" />
-    <path android:fillColor="#FFFFFF"
-        android:pathData="M56,42 L47,56 L53,56 L51,66 L60,52 L54,52 Z" />
+    <path android:strokeColor="#2A5A4A" android:strokeWidth="6.5" android:strokeLineCap="round"
+        android:pathData="M43,73.05 A22,22 0 1,1 65,73.05" />
+    <path android:strokeColor="#3DDC97" android:strokeWidth="6.5" android:strokeLineCap="round"
+        android:pathData="M43,73.05 A22,22 0 0,1 54,32" />
+    <path android:fillColor="#E9FFF3"
+        android:pathData="M57.5,39 L45.5,57 L53,57 L50.5,69.5 L62.5,51 L55,51 Z" />
 </vector>

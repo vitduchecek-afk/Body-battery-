@@ -4,6 +4,14 @@
     <color name="card">#161B22</color>
     <color name="fg">#F2F4F7</color>
     <color name="muted">#8B95A1</color>
-    <color name="accent">#2F80ED</color>
-    <color name="danger">#EB5757</color>
+    <color name="accent">#3DDC97</color>
+    <color name="on_accent">#06281A</color>
+    <color name="danger_text">#FFB4B4</color>
+    <!-- Charge level palette (mint → lime → amber → coral) -->
+    <color name="charge_high">#3DDC97</color>
+    <color name="charge_medium">#B5E35A</color>
+    <color name="charge_low">#F5B041</color>
+    <color name="charge_very_low">#F0605D</color>
+    <!-- Launcher icon -->
+    <color name="icon_bg">#0F2A23</color>
 </resources>

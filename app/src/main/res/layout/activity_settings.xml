@@ -25,7 +25,7 @@
                 android:layout_width="44dp"
                 android:layout_height="44dp"
                 android:background="@drawable/icon_button_bg"
-                android:contentDescription="Zpět"
+                android:contentDescription="@string/action_back"
                 android:padding="10dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_back" />
@@ -34,13 +34,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="14dp"
-                android:text="Nastavení"
+                android:text="@string/settings_title"
                 android:textColor="@color/fg"
                 android:textSize="22sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <!-- Account -->
+        <!-- Daily notification -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -49,10 +49,68 @@
             android:orientation="vertical"
             android:padding="16dp">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_notif_title"
+                        android:textColor="@color/fg"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/settings_notif_desc"
+                        android:textColor="@color/muted"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <Switch
+                    android:id="@+id/notif_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/settings_notif_title"
+                    android:thumbTint="@color/switch_thumb"
+                    android:trackTint="@color/switch_track" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/notif_time"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/secondary_button_bg"
+                android:stateListAnimator="@null"
+                android:textAllCaps="false"
+                android:textColor="@color/fg" />
+        </LinearLayout>
+
+        <!-- Account -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/card_bg"
+            android:orientation="vertical"
+            android:padding="16dp">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Účet COROS"
+                android:text="@string/settings_account"
                 android:textColor="@color/fg"
                 android:textSize="15sp"
                 android:textStyle="bold" />
@@ -72,9 +130,9 @@
                 android:layout_marginTop="14dp"
                 android:background="@drawable/secondary_button_bg"
                 android:stateListAnimator="@null"
-                android:text="Odpojit Koros"
+                android:text="@string/settings_disconnect"
                 android:textAllCaps="false"
-                android:textColor="#FFB4B4"
+                android:textColor="@color/danger_text"
                 android:textSize="15sp" />
         </LinearLayout>
 
@@ -90,7 +148,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Diagnostika"
+                android:text="@string/settings_diag_title"
                 android:textColor="@color/fg"
                 android:textSize="15sp"
                 android:textStyle="bold" />
@@ -99,7 +157,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Data, která aplikace naposledy dostala od Korosu. Hodí se při řešení problémů."
+                android:text="@string/settings_diag_desc"
                 android:textColor="@color/muted"
                 android:textSize="13sp" />
 
@@ -116,7 +174,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/secondary_button_bg"
                     android:stateListAnimator="@null"
-                    android:text="Zobrazit"
+                    android:text="@string/diag_show"
                     android:textAllCaps="false"
                     android:textColor="@color/fg" />
 
@@ -128,7 +186,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/secondary_button_bg"
                     android:stateListAnimator="@null"
-                    android:text="Kopírovat"
+                    android:text="@string/diag_copy"
                     android:textAllCaps="false"
                     android:textColor="@color/fg" />
             </LinearLayout>
@@ -145,13 +203,46 @@
                 android:visibility="gone" />
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/version"
-            android:layout_width="wrap_content"
+        <!-- About -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:textColor="@color/muted"
-            android:textSize="12sp" />
+            android:layout_marginTop="12dp"
+            android:background="@drawable/card_bg"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_about"
+                android:textColor="@color/fg"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="@string/about_independent"
+                android:textColor="@color/muted"
+                android:textSize="13sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="@string/about_privacy"
+                android:textColor="@color/muted"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/version"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/muted"
+                android:textSize="12sp" />
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>

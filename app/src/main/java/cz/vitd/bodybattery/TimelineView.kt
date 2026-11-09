@@ -29,8 +29,7 @@ class TimelineView(context: Context, attrs: AttributeSet? = null) : View(context
 
     private val d = resources.displayMetrics.density
     private val zone = ZoneId.systemDefault()
-    private val hhmm = DateTimeFormatter.ofPattern("HH:mm")
-    private val hh = DateTimeFormatter.ofPattern("H")
+        private val hh = Texts.hourPattern(context)
 
     private val line = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE; strokeWidth = 3f * d; strokeCap = Paint.Cap.ROUND; strokeJoin = Paint.Join.ROUND
@@ -93,7 +92,7 @@ class TimelineView(context: Context, attrs: AttributeSet? = null) : View(context
         val sx1 = x(wake.coerceIn(t0, t1))
         if (sx1 > sx0) {
             canvas.drawRoundRect(RectF(sx0, top - 14 * d, sx1, bottom), 8 * d, 8 * d, sleepPaint)
-            val label = "☾ spánek"
+            val label = "☾ " + context.getString(R.string.chart_sleep)
             if (sx1 - sx0 > sleepText.measureText(label) + 8 * d) canvas.drawText(label, sx0 + 6 * d, top - 2 * d, sleepText)
         }
 
@@ -103,7 +102,7 @@ class TimelineView(context: Context, attrs: AttributeSet? = null) : View(context
         while (tick.toEpochSecond() <= t1) {
             if (tick.hour % 3 == 0) {
                 val tx = x(tick.toEpochSecond())
-                val s = tick.format(hh) + "h"
+                val s = tick.format(hh)
                 canvas.drawText(s, (tx - axisText.measureText(s) / 2).coerceIn(left, right - axisText.measureText(s)), height - 4 * d, axisText)
             }
             tick = tick.plusHours(1)
@@ -150,7 +149,7 @@ class TimelineView(context: Context, attrs: AttributeSet? = null) : View(context
             canvas.drawLine(px, top, px, bottom, cursor)
             dot.color = RingRenderer.colorFor(pl)
             canvas.drawCircle(px, py, 5 * d, dot)
-            val text = "$pl  ·  " + Instant.ofEpochSecond(pt).atZone(zone).format(hhmm)
+            val text = context.getString(R.string.fmt_tooltip, pl, Texts.time(context, pt))
             val tw = bubbleText.measureText(text) + 16 * d
             val bx = (px - tw / 2).coerceIn(0f, width - tw)
             val by = (py - 36 * d).coerceAtLeast(0f)

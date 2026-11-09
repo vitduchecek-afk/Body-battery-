@@ -12,12 +12,16 @@ interface KeyValueStore {
     fun put(key: String, value: String?)
 }
 
-class CorosException(message: String) : Exception(message)
+/** Problem kinds; the app maps them to localized messages. */
+enum class Problem { NOT_CONNECTED, SESSION_EXPIRED, LOGIN_NONE, LOGIN_EXPIRED, LOGIN_FAILED, LOGIN_USED, LOGIN_UNEXPECTED, SERVER }
+
+/** [detail] is technical (English) context for diagnostics, never shown as the main message. */
+class CorosException(val problem: Problem, val detail: String? = null) : Exception(detail ?: problem.name)
 
 sealed class LoginPoll {
     object Pending : LoginPoll()
     object Done : LoginPoll()
-    data class Failed(val reason: String) : LoginPoll()
+    data class Failed(val problem: Problem, val detail: String? = null) : LoginPoll()
 }
 
 /**
@@ -80,7 +84,7 @@ class CorosClient(
             body = JSONObject().put("clientId", clientId).toString(), contentType = "application/json",
         )
         val payload = parseJsonBody(resp)
-        if (resp.status != 200 && resp.status != 201) throw CorosException("login session failed (${resp.status}): ${short(resp.body)}")
+        if (resp.status != 200 && resp.status != 201) throw CorosException(Problem.SERVER, "login session failed (${resp.status}): ${short(resp.body)}")
         val pending = JSONObject()
             .put("issuer", issuer)
             .put("client_id", clientId)
@@ -99,30 +103,30 @@ class CorosClient(
 
     /** Checks the pending login once. Call repeatedly (every ~3 s) until it is not [LoginPoll.Pending]. */
     fun pollLogin(): LoginPoll {
-        val pending = store.get(K_PENDING)?.let { JSONObject(it) } ?: return LoginPoll.Failed("Žádné rozpracované přihlášení")
+        val pending = store.get(K_PENDING)?.let { JSONObject(it) } ?: return LoginPoll.Failed(Problem.LOGIN_NONE)
         val issuer = pending.getString("issuer")
         val resp = http.request(
             "POST", "$issuer/api/v1/cli/login-sessions/${pending.getString("session_id")}/claim",
             headers = mapOf("X-Poll-Token" to pending.getString("poll_token")),
         )
         val payload = parseJsonBody(resp)
-        if (resp.status != 200) return fail("claim failed (${resp.status}): ${short(resp.body)}")
+        if (resp.status != 200) return fail(Problem.SERVER, "claim failed (${resp.status}): ${short(resp.body)}")
         return when (payload.optString("status").lowercase()) {
             "pending" -> LoginPoll.Pending
             "authorized" -> {
                 finishLogin(pending, payload.requireString("loginTicket"))
                 LoginPoll.Done
             }
-            "expired" -> fail("Přihlášení vypršelo, zkuste to znovu")
-            "failed" -> fail("Přihlášení selhalo: ${payload.optString("errorCode")}")
-            "claimed" -> fail("Přihlášení už bylo použito, zkuste to znovu")
-            else -> fail("Neočekávaná odpověď: ${short(resp.body)}")
+            "expired" -> fail(Problem.LOGIN_EXPIRED)
+            "failed" -> fail(Problem.LOGIN_FAILED, payload.optString("errorCode"))
+            "claimed" -> fail(Problem.LOGIN_USED)
+            else -> fail(Problem.LOGIN_UNEXPECTED, short(resp.body))
         }
     }
 
-    private fun fail(reason: String): LoginPoll {
+    private fun fail(problem: Problem, detail: String? = null): LoginPoll {
         store.put(K_PENDING, null)
-        return LoginPoll.Failed(reason)
+        return LoginPoll.Failed(problem, detail)
     }
 
     private fun finishLogin(pending: JSONObject, ticket: String) {
@@ -131,11 +135,11 @@ class CorosClient(
         val location = resp.header("location")
         if (resp.status !in listOf(301, 302, 303, 307) || location == null) {
             store.put(K_PENDING, null)
-            throw CorosException("authorize did not redirect (${resp.status}): ${short(resp.body)}")
+            throw CorosException(Problem.SERVER, "authorize did not redirect (${resp.status}): ${short(resp.body)}")
         }
         val params = queryParams(location)
-        val code = params["code"] ?: throw CorosException("callback without code: ${params["error"] ?: location.take(100)}")
-        if (params["state"] != pending.getString("state")) throw CorosException("state mismatch")
+        val code = params["code"] ?: throw CorosException(Problem.SERVER, "callback without code: ${params["error"] ?: location.take(100)}")
+        if (params["state"] != pending.getString("state")) throw CorosException(Problem.SERVER, "state mismatch")
         val issuer = pending.getString("issuer")
         val clientId = pending.getString("client_id")
         val tokenResp = http.request(
@@ -174,7 +178,7 @@ class CorosClient(
             .put("scope", SCOPES)
             .put("token_endpoint_auth_method", "none")
         val resp = http.request("POST", "$issuer/connect/register", body = body.toString(), contentType = "application/json")
-        if (resp.status != 200 && resp.status != 201) throw CorosException("client registration failed (${resp.status}): ${short(resp.body)}")
+        if (resp.status != 200 && resp.status != 201) throw CorosException(Problem.SERVER, "client registration failed (${resp.status}): ${short(resp.body)}")
         return parseJsonBody(resp).requireString("client_id")
     }
 
@@ -182,9 +186,9 @@ class CorosClient(
 
     private fun saveToken(resp: HttpResponse, issuer: String, clientId: String, oldRefresh: String?) {
         val payload = parseJsonBody(resp)
-        if (resp.status != 200) throw CorosException("token request failed (${resp.status}): ${short(resp.body)}")
+        if (resp.status != 200) throw CorosException(Problem.SERVER, "token request failed (${resp.status}): ${short(resp.body)}")
         val access = payload.optString("access_token")
-        if (access.isEmpty()) throw CorosException("token response without access_token")
+        if (access.isEmpty()) throw CorosException(Problem.SERVER, "token response without access_token")
         val refresh = payload.optString("refresh_token").ifEmpty { oldRefresh ?: "" }
         val token = JSONObject()
             .put("issuer", issuer)
@@ -197,12 +201,12 @@ class CorosClient(
     }
 
     private fun token(forceRefresh: Boolean = false): JSONObject {
-        val t = store.get(K_TOKEN)?.let { JSONObject(it) } ?: throw CorosException("Nejste připojen ke Korosu")
+        val t = store.get(K_TOKEN)?.let { JSONObject(it) } ?: throw CorosException(Problem.NOT_CONNECTED)
         if (!forceRefresh && nowEpoch() + 60 < t.getLong("expires_at")) return t
         val refresh = t.optString("refresh_token")
         if (refresh.isEmpty()) {
             store.put(K_TOKEN, null)
-            throw CorosException("Přihlášení vypršelo, připojte Koros znovu")
+            throw CorosException(Problem.SESSION_EXPIRED)
         }
         val resp = http.request(
             "POST", "${t.getString("issuer")}/oauth2/token",
@@ -213,7 +217,7 @@ class CorosClient(
         )
         if (resp.status == 400 || resp.status == 401) {
             store.put(K_TOKEN, null)
-            throw CorosException("Přihlášení vypršelo, připojte Koros znovu")
+            throw CorosException(Problem.SESSION_EXPIRED)
         }
         saveToken(resp, t.getString("issuer"), t.getString("client_id"), refresh)
         return JSONObject(store.get(K_TOKEN)!!)
@@ -246,12 +250,12 @@ class CorosClient(
             t = token(forceRefresh = true)
             initResp = mcpRaw(t, "initialize", init)
         }
-        if (initResp.status != 200) throw CorosException("MCP initialize failed (${initResp.status}): ${short(initResp.body)}")
+        if (initResp.status != 200) throw CorosException(Problem.SERVER, "MCP initialize failed (${initResp.status}): ${short(initResp.body)}")
         val resp = mcpRaw(t, method, params)
         val payload = parseJsonBody(resp)
-        if (resp.status != 200) throw CorosException("MCP $method failed (${resp.status}): ${short(resp.body)}")
-        if (payload.has("error")) throw CorosException("MCP $method error: ${short(payload.get("error").toString())}")
-        return payload.optJSONObject("result") ?: throw CorosException("MCP $method: missing result")
+        if (resp.status != 200) throw CorosException(Problem.SERVER, "MCP $method failed (${resp.status}): ${short(resp.body)}")
+        if (payload.has("error")) throw CorosException(Problem.SERVER, "MCP $method error: ${short(payload.get("error").toString())}")
+        return payload.optJSONObject("result") ?: throw CorosException(Problem.SERVER, "MCP $method: missing result")
     }
 
     fun listTools(): List<JSONObject> {
@@ -300,7 +304,7 @@ internal fun parseJsonBody(resp: HttpResponse): JSONObject {
 
 private fun JSONObject.requireString(key: String): String {
     val v = optString(key)
-    if (v.isEmpty()) throw CorosException("response is missing $key")
+    if (v.isEmpty()) throw CorosException(Problem.SERVER, "response is missing $key")
     return v
 }
 

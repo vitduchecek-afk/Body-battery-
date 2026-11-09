@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="charge_term">Заряд</string>
+    <string name="level_high">Высокий</string>
+    <string name="level_medium">Средний</string>
+    <string name="level_low">Низкий</string>
+    <string name="level_very_low">Очень низкий</string>
+
+    <string name="action_refresh">Обновить</string>
+    <string name="action_settings">Настройки</string>
+    <string name="action_back">Назад</string>
+    <string name="action_continue">Продолжить</string>
+    <string name="action_cancel">Отмена</string>
+    <string name="action_ok">ОК</string>
+
+    <string name="connect_button">Подключить COROS</string>
+    <string name="connect_restart">Начать вход заново</string>
+    <string name="status_pending">Завершите вход в браузере и вернитесь сюда…</string>
+    <string name="status_not_connected">Подключите аккаунт COROS</string>
+    <string name="status_loading">Загрузка данных из COROS…</string>
+    <string name="status_no_data">Данных пока нет</string>
+    <string name="status_updating">Обновление…</string>
+    <string name="status_updated">Обновлено в %1$s</string>
+    <string name="toast_connected">COROS подключён</string>
+
+    <string name="stat_morning">Утром</string>
+    <string name="stat_charged">Восстановлено</string>
+    <string name="stat_drained">Потрачено</string>
+    <string name="chart_title">Сегодня</string>
+    <string name="chart_sleep">Сон</string>
+    <string name="ring_cd">Заряд %1$d из 100</string>
+    <string name="ring_cd_unknown">Заряд неизвестен</string>
+
+    <string name="note_wake_unknown">Время пробуждения неизвестно – принято 7:00</string>
+    <string name="note_no_sleep">Нет данных о сне – принят сон до 7:00</string>
+    <string name="note_low_data">Мало непрерывных данных о стрессе – график приблизительный</string>
+    <string name="note_start_replayed">Уровень перед сном рассчитан по предыдущему дню</string>
+    <string name="note_start_default">Уровень перед сном неизвестен – начальное значение %1$d</string>
+
+    <string name="err_not_connected">Нет подключения к COROS</string>
+    <string name="err_session_expired">Срок входа истёк. Подключите COROS заново.</string>
+    <string name="err_login_none">Вход не выполняется</string>
+    <string name="err_login_expired">Срок входа истёк. Попробуйте ещё раз.</string>
+    <string name="err_login_failed">Не удалось войти</string>
+    <string name="err_login_used">Этот вход уже использован. Попробуйте ещё раз.</string>
+    <string name="err_login_unexpected">Неожиданный ответ при входе</string>
+    <string name="err_server">COROS вернул ошибку</string>
+    <string name="err_network">Не удалось связаться с COROS. Проверьте подключение к интернету.</string>
+    <string name="err_login_start">Не удалось начать вход</string>
+    <string name="err_login_timeout">Вход не был завершён вовремя. Попробуйте ещё раз.</string>
+
+    <string name="widget_connect">подключить</string>
+    <string name="widget_loading">загрузка</string>
+    <string name="widget_desc">Ваш дневной заряд по данным COROS</string>
+
+    <string name="settings_title">Настройки</string>
+    <string name="settings_account">Аккаунт COROS</string>
+    <string name="settings_connected">Подключено – данные обновляются примерно каждые 15 минут</string>
+    <string name="settings_not_connected">Не подключено – подключитесь на главном экране</string>
+    <string name="settings_disconnect">Отключить COROS</string>
+    <string name="toast_disconnected">COROS отключён</string>
+
+    <string name="settings_notif_title">Ежедневное уведомление</string>
+    <string name="settings_notif_desc">Раз в день показывает ваш заряд.</string>
+    <string name="settings_notif_time">Время: %1$s</string>
+    <string name="notif_permission_title">Разрешить уведомления</string>
+    <string name="notif_permission_text">Чтобы показывать ваш дневной заряд, Android нужно разрешение на уведомления. Ничего не покидает ваш телефон.</string>
+    <string name="notif_permission_denied">Уведомления не разрешены. Их можно включить в настройках системы.</string>
+
+    <string name="settings_diag_title">Диагностика</string>
+    <string name="settings_diag_desc">Данные, которые приложение последний раз получило от COROS. Помогают при решении проблем.</string>
+    <string name="diag_show">Показать</string>
+    <string name="diag_hide">Скрыть</string>
+    <string name="diag_copy">Копировать</string>
+    <string name="toast_copied">Скопировано</string>
+
+    <string name="settings_about">О приложении</string>
+    <string name="about_independent">Независимый проект. Не связан с COROS или Garmin и не одобрен ими.</string>
+    <string name="about_privacy">Ваши данные остаются на этом телефоне. Приложение общается только с официальным сервисом COROS и ничего не отправляет в другие места.</string>
+    <string name="about_version">Версия %1$s</string>
+
+    <string name="notif_channel_name">Дневной заряд</string>
+    <string name="notif_channel_desc">Одно уведомление в день с текущим зарядом</string>
+    <string name="notif_today">Сегодня: %1$d/100 · %2$s</string>
+    <string name="notif_last">Последнее значение (%1$s): %2$d/100 · %3$s</string>
+
+    <string name="vo2_title">МПК (VO₂ max)</string>
+    <string name="vo2_unit">мл/кг/мин</string>
+    <string name="vo2_source_coros">Данные COROS</string>
+    <string name="vo2_source_runs">Оценка по вашим пробежкам</string>
+    <string name="vo2_source_rhr">Оценка по пульсу</string>
+    <string name="vo2_change">%1$s по сравнению с прошлым месяцем</string>
+    <string name="vo2_no_change">Сравнения с прошлым месяцем пока нет</string>
+    <string name="vo2_no_data">Недостаточно данных</string>
+    <string name="vo2_missing_runs">Нужны пробежки длительностью не менее 15 минут с записью пульса.</string>
+    <string name="vo2_missing_rhr">Нужен ваш пульс в покое.</string>
+    <string name="vo2_missing_maxhr">Нужна дата рождения в профиле COROS или тренировка с записанным максимальным пульсом.</string>
+    <string name="vo2_explain_title">Как определяется VO₂ max</string>
+    <string name="vo2_explain_coros">Это значение рассчитано COROS и показано без изменений.</string>
+    <string name="vo2_explain_runs">Это оценка, а не измерение. Для каждой подходящей пробежки (не менее 15 минут) потребление кислорода при вашем темпе рассчитывается по беговому уравнению ACSM и масштабируется по тому, насколько интенсивно работало сердце между пульсом в покое и максимальным. Показывается медиана последних пробежек; необычные значения отбрасываются.</string>
+    <string name="vo2_explain_rhr">Это грубая оценка, а не измерение. Без подходящих пробежек она рассчитывается по отношению максимального пульса к пульсу в покое (метод Ута). Пробежки с пульсом дают более точную оценку.</string>
+    <string name="vo2_explain_missing">Для оценки пока недостаточно данных. Лучше не показывать число, чем показать выдуманное.</string>
+
+    <string name="diag_version">Версия приложения: %1$s</string>
+    <string name="diag_recognized">Распознанные данные</string>
+    <string name="diag_counts">Пульс: %1$d, стресс: %2$d, ВСР: %3$d записей</string>
+    <string name="diag_sleep">Периоды сна: %1$d</string>
+    <string name="diag_calc">Расчёт</string>
+    <string name="diag_calc_line">Сейчас %1$d, утром %2$d, +%3$d / −%4$d</string>
+    <string name="diag_vo2">VO₂ max: %1$s</string>
+    <string name="diag_tools">Доступные инструменты COROS MCP (%1$d)</string>
+    <string name="diag_calls">Вызовы (%1$d)</string>
+    <string name="diag_call_error">(ошибка)</string>
+    <string name="diag_truncated">[… сокращено, всего символов: %1$d …]</string>
+    <string name="diag_error">Ошибка обновления (%1$s, версия %2$s):</string>
+    <string name="diag_empty">Данных пока нет.</string>
+</resources>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="charge_term">チャージ</string>
+    <string name="level_high">高い</string>
+    <string name="level_medium">普通</string>
+    <string name="level_low">低い</string>
+    <string name="level_very_low">とても低い</string>
+
+    <string name="action_refresh">更新</string>
+    <string name="action_settings">設定</string>
+    <string name="action_back">戻る</string>
+    <string name="action_continue">続ける</string>
+    <string name="action_cancel">キャンセル</string>
+    <string name="action_ok">OK</string>
+
+    <string name="connect_button">COROS に接続</string>
+    <string name="connect_restart">ログインをやり直す</string>
+    <string name="status_pending">ブラウザでログインを完了してから、ここに戻ってください…</string>
+    <string name="status_not_connected">COROS アカウントを接続してください</string>
+    <string name="status_loading">COROS からデータを読み込んでいます…</string>
+    <string name="status_no_data">まだデータがありません</string>
+    <string name="status_updating">更新中…</string>
+    <string name="status_updated">%1$s に更新</string>
+    <string name="toast_connected">COROS に接続しました</string>
+
+    <string name="stat_morning">朝</string>
+    <string name="stat_charged">回復</string>
+    <string name="stat_drained">消費</string>
+    <string name="chart_title">今日</string>
+    <string name="chart_sleep">睡眠</string>
+    <string name="ring_cd">チャージ %1$d / 100</string>
+    <string name="ring_cd_unknown">チャージ不明</string>
+
+    <string name="note_wake_unknown">起床時刻が不明のため 7:00 として計算</string>
+    <string name="note_no_sleep">睡眠データがないため 7:00 まで睡眠として計算</string>
+    <string name="note_low_data">連続したストレスデータが少ないため、グラフは概算です</string>
+    <string name="note_start_replayed">就寝前のレベルは前日のデータから算出</string>
+    <string name="note_start_default">就寝前のレベルが不明のため %1$d から計算</string>
+
+    <string name="err_not_connected">COROS に接続されていません</string>
+    <string name="err_session_expired">ログインの有効期限が切れました。COROS に再接続してください。</string>
+    <string name="err_login_none">進行中のログインはありません</string>
+    <string name="err_login_expired">ログインの有効期限が切れました。もう一度お試しください。</string>
+    <string name="err_login_failed">ログインに失敗しました</string>
+    <string name="err_login_used">このログインはすでに使用されています。もう一度お試しください。</string>
+    <string name="err_login_unexpected">ログイン中に予期しない応答がありました</string>
+    <string name="err_server">COROS がエラーを返しました</string>
+    <string name="err_network">COROS に接続できません。インターネット接続を確認してください。</string>
+    <string name="err_login_start">ログインを開始できませんでした</string>
+    <string name="err_login_timeout">ログインが時間内に完了しませんでした。もう一度お試しください。</string>
+
+    <string name="widget_connect">接続</string>
+    <string name="widget_loading">読み込み中</string>
+    <string name="widget_desc">COROS のデータから計算した毎日のチャージ</string>
+
+    <string name="settings_title">設定</string>
+    <string name="settings_account">COROS アカウント</string>
+    <string name="settings_connected">接続済み – データは約 15 分ごとに更新されます</string>
+    <string name="settings_not_connected">未接続 – メイン画面から接続してください</string>
+    <string name="settings_disconnect">COROS との接続を解除</string>
+    <string name="toast_disconnected">COROS との接続を解除しました</string>
+
+    <string name="settings_notif_title">毎日の通知</string>
+    <string name="settings_notif_desc">1 日 1 回チャージを表示します。</string>
+    <string name="settings_notif_time">時刻：%1$s</string>
+    <string name="notif_permission_title">通知を許可</string>
+    <string name="notif_permission_text">毎日のチャージを表示するには、通知の表示を Android で許可する必要があります。データがスマートフォンの外に出ることはありません。</string>
+    <string name="notif_permission_denied">通知が許可されていません。システム設定で有効にできます。</string>
+
+    <string name="settings_diag_title">診断</string>
+    <string name="settings_diag_desc">アプリが最後に COROS から受け取ったデータです。問題の解決に役立ちます。</string>
+    <string name="diag_show">表示</string>
+    <string name="diag_hide">非表示</string>
+    <string name="diag_copy">コピー</string>
+    <string name="toast_copied">コピーしました</string>
+
+    <string name="settings_about">このアプリについて</string>
+    <string name="about_independent">独立したプロジェクトです。COROS や Garmin とは提携・承認・関係のいずれもありません。</string>
+    <string name="about_privacy">データはこのスマートフォン内に保存されます。アプリは COROS の公式サービスとのみ通信し、それ以外の場所には何も送信しません。</string>
+    <string name="about_version">バージョン %1$s</string>
+
+    <string name="notif_channel_name">毎日のチャージ</string>
+    <string name="notif_channel_desc">現在のチャージを 1 日 1 回通知します</string>
+    <string name="notif_today">今日：%1$d/100 · %2$s</string>
+    <string name="notif_last">最終値（%1$s）：%2$d/100 · %3$s</string>
+
+    <string name="vo2_title">VO₂max</string>
+    <string name="vo2_unit">ml/kg/分</string>
+    <string name="vo2_source_coros">COROS の値</string>
+    <string name="vo2_source_runs">ランニングからの推定値</string>
+    <string name="vo2_source_rhr">心拍数からの推定値</string>
+    <string name="vo2_change">先月比 %1$s</string>
+    <string name="vo2_no_change">先月との比較はまだありません</string>
+    <string name="vo2_no_data">データ不足</string>
+    <string name="vo2_missing_runs">心拍数付きで 15 分以上のランニングが必要です。</string>
+    <string name="vo2_missing_rhr">安静時心拍数が必要です。</string>
+    <string name="vo2_missing_maxhr">COROS プロフィールの生年月日、または最大心拍数が記録されたトレーニングが必要です。</string>
+    <string name="vo2_explain_title">VO₂max の求め方</string>
+    <string name="vo2_explain_coros">この値は COROS が計算したもので、そのまま表示しています。</string>
+    <string name="vo2_explain_runs">これは測定値ではなく推定値です。条件を満たす各ランニング（15 分以上）について、ACSM のランニング式でペースの酸素消費量を計算し、安静時心拍数と最大心拍数の間で心拍数がどの程度だったかに応じて換算します。最近のランニングの中央値を表示し、異常な値は除外します。</string>
+    <string name="vo2_explain_rhr">これは測定値ではなく大まかな推定値です。条件を満たすランニングがない場合、最大心拍数と安静時心拍数の比から計算します（Uth 法）。心拍数付きのランニングがあると、より良い推定になります。</string>
+    <string name="vo2_explain_missing">推定に必要なデータがまだ足りません。作った数字を出すより、何も表示しないことにしています。</string>
+
+    <string name="diag_version">アプリのバージョン：%1$s</string>
+    <string name="diag_recognized">認識したデータ</string>
+    <string name="diag_counts">心拍数：%1$d、ストレス：%2$d、HRV：%3$d 件</string>
+    <string name="diag_sleep">睡眠区間：%1$d</string>
+    <string name="diag_calc">計算</string>
+    <string name="diag_calc_line">現在 %1$d、朝 %2$d、+%3$d / −%4$d</string>
+    <string name="diag_vo2">VO₂max：%1$s</string>
+    <string name="diag_tools">利用可能な COROS MCP ツール（%1$d）</string>
+    <string name="diag_calls">呼び出し（%1$d）</string>
+    <string name="diag_call_error">（エラー）</string>
+    <string name="diag_truncated">[… 省略、合計 %1$d 文字 …]</string>
+    <string name="diag_error">更新エラー（%1$s、バージョン %2$s）：</string>
+    <string name="diag_empty">まだデータがありません。</string>
+</resources>

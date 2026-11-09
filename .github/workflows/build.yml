@@ -37,29 +37,92 @@ jobs:
             openssl rand -hex 24 > ~/.bb-signing/pass
             keytool -genkeypair -keystore ~/.bb-signing/release.jks -alias bodybattery \
               -storepass "$(cat ~/.bb-signing/pass)" -keypass "$(cat ~/.bb-signing/pass)" \
-              -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Body Battery, C=CZ"
+              -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Charge for COROS, C=CZ"
           fi
           echo "::add-mask::$(cat ~/.bb-signing/pass)"
           echo "BB_KEYSTORE=$HOME/.bb-signing/release.jks" >> "$GITHUB_ENV"
           echo "BB_KEYSTORE_PASS=$(cat ~/.bb-signing/pass)" >> "$GITHUB_ENV"
 
-      - name: Test core and build APK
+      - name: Unit tests (core, translations) and APK
         run: gradle --no-daemon :core:test :app:assembleRelease
 
+      - name: Android lint (informational)
+        continue-on-error: true
+        run: gradle --no-daemon :app:lintDebug
+
+      - name: Upload lint report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lint-report
+          path: app/build/reports/lint-results-debug.*
+          if-no-files-found: ignore
+
       - name: Rename APK
-        run: cp app/build/outputs/apk/release/app-release.apk BodyBattery.apk
+        run: cp app/build/outputs/apk/release/app-release.apk ChargeForCOROS.apk
 
       - uses: actions/upload-artifact@v4
         with:
-          name: BodyBattery-apk
-          path: BodyBattery.apk
+          name: ChargeForCOROS-apk
+          path: ChargeForCOROS.apk
 
       - name: Publish release "latest"
         env:
           GH_TOKEN: ${{ github.token }}
+          RUN_NUMBER: ${{ github.run_number }}
+          SHA: ${{ github.sha }}
         run: |
           gh release delete latest --yes --cleanup-tag || true
-          gh release create latest BodyBattery.apk \
-            --target "${{ github.sha }}" \
-            --title "Body Battery (build ${{ github.run_number }})" \
-            --notes "Automaticky sestavené APK z větve ${{ github.ref_name }}. Stáhněte BodyBattery.apk a nainstalujte."
+          gh release create latest ChargeForCOROS.apk \
+            --target "$SHA" \
+            --title "Charge for COROS (build $RUN_NUMBER)" \
+            --notes "Automatically built APK. Download ChargeForCOROS.apk and install it."
+
+  # Instrumented tests on an emulator: daily notification delivery and language switching.
+  device-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.14.3"
+
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: Build test APKs
+        run: gradle --no-daemon :app:assembleDebug :app:assembleDebugAndroidTest
+
+      - name: Run instrumented tests on Android 14 emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 34
+          target: google_apis
+          arch: x86_64
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          script: |
+            adb logcat -c
+            gradle --no-daemon :app:connectedDebugAndroidTest || (adb logcat -d -s DailyNotificationTest AndroidRuntime TestRunner > logcat.txt; exit 1)
+            adb logcat -d -s DailyNotificationTest > logcat.txt
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: device-test-results
+          path: |
+            app/build/reports/androidTests/
+            app/build/outputs/androidTest-results/
+            logcat.txt
+          if-no-files-found: ignore

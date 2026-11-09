@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="charge_term">Ladung</string>
+    <string name="level_high">Hoch</string>
+    <string name="level_medium">Mittel</string>
+    <string name="level_low">Niedrig</string>
+    <string name="level_very_low">Sehr niedrig</string>
+
+    <string name="action_refresh">Aktualisieren</string>
+    <string name="action_settings">Einstellungen</string>
+    <string name="action_back">Zurück</string>
+    <string name="action_continue">Weiter</string>
+    <string name="action_cancel">Abbrechen</string>
+    <string name="action_ok">OK</string>
+
+    <string name="connect_button">COROS verbinden</string>
+    <string name="connect_restart">Anmeldung neu starten</string>
+    <string name="status_pending">Schließe die Anmeldung im Browser ab und kehre dann hierher zurück…</string>
+    <string name="status_not_connected">Verbinde dein COROS-Konto</string>
+    <string name="status_loading">Daten werden von COROS geladen…</string>
+    <string name="status_no_data">Noch keine Daten</string>
+    <string name="status_updating">Wird aktualisiert…</string>
+    <string name="status_updated">Aktualisiert um %1$s</string>
+    <string name="toast_connected">COROS verbunden</string>
+
+    <string name="stat_morning">Morgens</string>
+    <string name="stat_charged">Geladen</string>
+    <string name="stat_drained">Verbraucht</string>
+    <string name="chart_title">Heute</string>
+    <string name="chart_sleep">Schlaf</string>
+    <string name="ring_cd">Ladung %1$d von 100</string>
+    <string name="ring_cd_unknown">Ladung unbekannt</string>
+
+    <string name="note_wake_unknown">Aufwachzeit unbekannt – 7:00 angenommen</string>
+    <string name="note_no_sleep">Keine Schlafdaten – Schlaf bis 7:00 angenommen</string>
+    <string name="note_low_data">Wenige fortlaufende Stressdaten – der Verlauf ist ungefähr</string>
+    <string name="note_start_replayed">Stand vor dem Schlaf aus dem Vortag berechnet</string>
+    <string name="note_start_default">Stand vor dem Schlaf unbekannt – Start bei %1$d</string>
+
+    <string name="err_not_connected">Nicht mit COROS verbunden</string>
+    <string name="err_session_expired">Deine Anmeldung ist abgelaufen. Bitte verbinde COROS erneut.</string>
+    <string name="err_login_none">Keine Anmeldung in Bearbeitung</string>
+    <string name="err_login_expired">Anmeldung abgelaufen. Bitte versuche es erneut.</string>
+    <string name="err_login_failed">Anmeldung fehlgeschlagen</string>
+    <string name="err_login_used">Diese Anmeldung wurde bereits verwendet. Bitte versuche es erneut.</string>
+    <string name="err_login_unexpected">Unerwartete Antwort bei der Anmeldung</string>
+    <string name="err_server">COROS hat einen Fehler gemeldet</string>
+    <string name="err_network">COROS ist nicht erreichbar. Prüfe deine Internetverbindung.</string>
+    <string name="err_login_start">Anmeldung konnte nicht gestartet werden</string>
+    <string name="err_login_timeout">Die Anmeldung wurde nicht rechtzeitig abgeschlossen. Bitte versuche es erneut.</string>
+
+    <string name="widget_connect">verbinden</string>
+    <string name="widget_loading">lädt</string>
+    <string name="widget_desc">Deine tägliche Ladung, berechnet aus COROS-Daten</string>
+
+    <string name="settings_title">Einstellungen</string>
+    <string name="settings_account">COROS-Konto</string>
+    <string name="settings_connected">Verbunden – Daten werden etwa alle 15 Minuten aktualisiert</string>
+    <string name="settings_not_connected">Nicht verbunden – verbinde dich auf dem Hauptbildschirm</string>
+    <string name="settings_disconnect">COROS trennen</string>
+    <string name="toast_disconnected">COROS getrennt</string>
+
+    <string name="settings_notif_title">Tägliche Benachrichtigung</string>
+    <string name="settings_notif_desc">Zeigt einmal am Tag deine Ladung.</string>
+    <string name="settings_notif_time">Uhrzeit: %1$s</string>
+    <string name="notif_permission_title">Benachrichtigungen erlauben</string>
+    <string name="notif_permission_text">Damit deine tägliche Ladung angezeigt werden kann, braucht Android deine Erlaubnis für Benachrichtigungen. Es verlässt nichts dein Telefon.</string>
+    <string name="notif_permission_denied">Benachrichtigungen sind nicht erlaubt. Du kannst sie in den Systemeinstellungen aktivieren.</string>
+
+    <string name="settings_diag_title">Diagnose</string>
+    <string name="settings_diag_desc">Die Daten, die die App zuletzt von COROS erhalten hat. Hilfreich bei Problemen.</string>
+    <string name="diag_show">Anzeigen</string>
+    <string name="diag_hide">Ausblenden</string>
+    <string name="diag_copy">Kopieren</string>
+    <string name="toast_copied">Kopiert</string>
+
+    <string name="settings_about">Über die App</string>
+    <string name="about_independent">Unabhängiges Projekt. Nicht mit COROS oder Garmin verbunden und nicht von ihnen unterstützt.</string>
+    <string name="about_privacy">Deine Daten bleiben auf diesem Telefon. Die App kommuniziert nur mit dem offiziellen COROS-Dienst und sendet nichts woandershin.</string>
+    <string name="about_version">Version %1$s</string>
+
+    <string name="notif_channel_name">Tägliche Ladung</string>
+    <string name="notif_channel_desc">Eine Benachrichtigung pro Tag mit deiner aktuellen Ladung</string>
+    <string name="notif_today">Heute: %1$d/100 · %2$s</string>
+    <string name="notif_last">Zuletzt bekannt (%1$s): %2$d/100 · %3$s</string>
+
+    <string name="vo2_title">VO₂max</string>
+    <string name="vo2_unit">ml/kg/min</string>
+    <string name="vo2_source_coros">Von COROS</string>
+    <string name="vo2_source_runs">Schätzung aus deinen Läufen</string>
+    <string name="vo2_source_rhr">Schätzung aus der Herzfrequenz</string>
+    <string name="vo2_change">%1$s gegenüber dem Vormonat</string>
+    <string name="vo2_no_change">Noch kein Vergleich mit dem Vormonat</string>
+    <string name="vo2_no_data">Nicht genug Daten</string>
+    <string name="vo2_missing_runs">Benötigt Läufe von mindestens 15 Minuten mit Herzfrequenz.</string>
+    <string name="vo2_missing_rhr">Benötigt deine Ruheherzfrequenz.</string>
+    <string name="vo2_missing_maxhr">Benötigt dein Geburtsdatum im COROS-Profil oder ein Training mit aufgezeichneter maximaler Herzfrequenz.</string>
+    <string name="vo2_explain_title">So wird VO₂max ermittelt</string>
+    <string name="vo2_explain_coros">Dieser Wert wurde von COROS berechnet und wird unverändert angezeigt.</string>
+    <string name="vo2_explain_runs">Dies ist eine Schätzung, keine Messung. Für jeden geeigneten Lauf (mindestens 15 Minuten) wird der Sauerstoffbedarf deines Tempos mit der ACSM-Laufgleichung berechnet und danach skaliert, wie stark dein Herz im Verhältnis zu Ruhe- und Maximalpuls gearbeitet hat. Angezeigt wird der Median deiner letzten Läufe; ungewöhnliche Werte werden ignoriert.</string>
+    <string name="vo2_explain_rhr">Dies ist eine grobe Schätzung, keine Messung. Ohne geeignete Läufe wird sie aus dem Verhältnis von maximaler zu Ruheherzfrequenz berechnet (Uth-Methode). Läufe mit Herzfrequenz ergeben eine bessere Schätzung.</string>
+    <string name="vo2_explain_missing">Für eine Schätzung gibt es noch nicht genug Daten. Statt einer erfundenen Zahl wird keine angezeigt.</string>
+
+    <string name="diag_version">App-Version: %1$s</string>
+    <string name="diag_recognized">Erkannte Daten</string>
+    <string name="diag_counts">Herzfrequenz: %1$d, Stress: %2$d, HRV: %3$d Messwerte</string>
+    <string name="diag_sleep">Schlafphasen: %1$d</string>
+    <string name="diag_calc">Berechnung</string>
+    <string name="diag_calc_line">Jetzt %1$d, morgens %2$d, +%3$d / −%4$d</string>
+    <string name="diag_vo2">VO₂max: %1$s</string>
+    <string name="diag_tools">Verfügbare COROS-MCP-Tools (%1$d)</string>
+    <string name="diag_calls">Aufrufe (%1$d)</string>
+    <string name="diag_call_error">(Fehler)</string>
+    <string name="diag_truncated">[… gekürzt, insgesamt %1$d Zeichen …]</string>
+    <string name="diag_error">Fehler beim Aktualisieren (%1$s, Version %2$s):</string>
+    <string name="diag_empty">Noch keine Daten.</string>
+</resources>
