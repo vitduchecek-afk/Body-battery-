@@ -1,0 +1,65 @@
+name: Build APK
+
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.14.3"
+
+      # The signing key is created once on GitHub and kept in the Actions cache (never in the repo),
+      # so every new APK installs as an update over the previous one.
+      - name: Restore signing key
+        uses: actions/cache@v4
+        with:
+          path: ~/.bb-signing
+          key: bb-signing-key-v1
+
+      - name: Create signing key if missing
+        run: |
+          mkdir -p ~/.bb-signing
+          if [ ! -f ~/.bb-signing/release.jks ]; then
+            openssl rand -hex 24 > ~/.bb-signing/pass
+            keytool -genkeypair -keystore ~/.bb-signing/release.jks -alias bodybattery \
+              -storepass "$(cat ~/.bb-signing/pass)" -keypass "$(cat ~/.bb-signing/pass)" \
+              -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Body Battery, C=CZ"
+          fi
+          echo "::add-mask::$(cat ~/.bb-signing/pass)"
+          echo "BB_KEYSTORE=$HOME/.bb-signing/release.jks" >> "$GITHUB_ENV"
+          echo "BB_KEYSTORE_PASS=$(cat ~/.bb-signing/pass)" >> "$GITHUB_ENV"
+
+      - name: Test core and build APK
+        run: gradle --no-daemon :core:test :app:assembleRelease
+
+      - name: Rename APK
+        run: cp app/build/outputs/apk/release/app-release.apk BodyBattery.apk
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: BodyBattery-apk
+          path: BodyBattery.apk
+
+      - name: Publish release "latest"
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete latest --yes --cleanup-tag || true
+          gh release create latest BodyBattery.apk \
+            --target "${{ github.sha }}" \
+            --title "Body Battery (build ${{ github.run_number }})" \
+            --notes "Automaticky sestavené APK z větve ${{ github.ref_name }}. Stáhněte BodyBattery.apk a nainstalujte."
