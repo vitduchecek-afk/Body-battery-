@@ -24,6 +24,27 @@ object ToolPlanner {
     private const val MAX_TOOLS = 10
 
     fun plan(tools: List<JSONObject>, now: ZonedDateTime): List<PlannedCall> {
+        val names = tools.map { it.optString("name") }.toSet()
+        if ("queryStressTimeSeries" in names && "querySleepOverview" in names) return corosPlan(names, now)
+        return genericPlan(tools, now)
+    }
+
+    /** Known COROS MCP tools (as of 2026-11): exact calls, yesterday..today (dates are wake-up days). */
+    private fun corosPlan(names: Set<String>, now: ZonedDateTime): List<PlannedCall> {
+        val today = now.toLocalDate().format(DateTimeFormatter.BASIC_ISO_DATE)
+        val yday = now.toLocalDate().minusDays(1).format(DateTimeFormatter.BASIC_ISO_DATE)
+        fun range() = JSONObject().put("startDate", yday).put("endDate", today)
+        val calls = mutableListOf(
+            PlannedCall("querySleepOverview", range(), null),
+            PlannedCall("queryStressTimeSeries", range(), null),
+            PlannedCall("querySleepHrv", range(), null),
+            PlannedCall("queryRestingHeartRate", JSONObject().put("days", 2), null),
+            PlannedCall("querySportRecords", range(), null),
+        )
+        return calls.filter { it.tool in names }
+    }
+
+    private fun genericPlan(tools: List<JSONObject>, now: ZonedDateTime): List<PlannedCall> {
         val scored = tools.mapNotNull { t ->
             val name = t.optString("name")
             if (name.isEmpty()) return@mapNotNull null

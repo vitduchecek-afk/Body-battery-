@@ -73,25 +73,34 @@ class DataExtractor(private val zone: ZoneId) {
         val content = result.optJSONArray("content") ?: return
         for (i in 0 until content.length()) {
             val c = content.optJSONObject(i) ?: continue
-            val text = c.optString("text")
+            val text = unwrapText(c.optString("text"))
             if (text.isEmpty()) continue
-            parseLoose(text)?.let { walk(it, ctx) }
+            val json = if (text.contains('{') || text.contains('[')) parseLoose(text) else null
+            if (json != null) walk(json, ctx)
+            textParser.parse(toolName, text)
         }
     }
 
+    private val textParser = CorosTextParser(zone)
+
     fun addJson(root: Any, context: String = "") = walk(root, norm(context))
 
-    fun result(): HealthData = HealthData(
-        samples = samples.values.sortedBy { it.epoch },
-        sleeps = sleeps.distinct().sortedBy { it.start },
-        sleepMinutes = sleepMinutes,
-        sleepScore = sleepScore,
-        hrvNight = hrvNight,
-        hrvBaseline = hrvBaseline,
-        restingHr = restingHr,
-        maxHr = maxHr,
-        activities = activities.values.sortedBy { it.start },
-    )
+    fun result(): HealthData {
+        val tp = textParser
+        tp.samples.forEach { samples[it.kind to it.epoch] = it }
+        tp.activities.forEach { activities[it.start] = it }
+        return HealthData(
+            samples = samples.values.sortedBy { it.epoch },
+            sleeps = (sleeps + tp.sleeps).distinct().sortedBy { it.start },
+            sleepMinutes = tp.sleepMinutes ?: sleepMinutes,
+            sleepScore = tp.sleepScore ?: sleepScore,
+            hrvNight = tp.hrvNight ?: hrvNight,
+            hrvBaseline = tp.hrvBaseline ?: hrvBaseline,
+            restingHr = tp.restingHr ?: restingHr,
+            maxHr = maxHr,
+            activities = activities.values.sortedBy { it.start },
+        )
+    }
 
     // ------------------------------------------------------------------ walking
 
@@ -339,6 +348,15 @@ class DataExtractor(private val zone: ZoneId) {
             DateTimeFormatter.ofPattern("yyyyMMddHHmmss"),
             DateTimeFormatter.ofPattern("yyyyMMddHHmm"),
         )
+
+        /** Some MCP servers wrap the text in an extra JSON string literal: "\"line1\\nline2\"". */
+        fun unwrapText(text: String): String {
+            val t = text.trim()
+            if (t.length >= 2 && t.startsWith("\"") && t.endsWith("\"")) {
+                runCatching { return JSONArray("[$t]").getString(0) }
+            }
+            return text
+        }
 
         fun norm(s: String) = s.lowercase().replace("_", "").replace("-", "").replace(" ", "")
 

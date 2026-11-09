@@ -44,13 +44,24 @@ object Refresher {
                 diag.append("(chyba volání)\n")
                 continue
             }
-            diag.append(rawText(res).take(RAW_LIMIT)).append('\n')
+            val raw = rawText(res)
+            if (raw.length <= RAW_LIMIT) diag.append(raw) else {
+                diag.append(raw.take(RAW_LIMIT / 2)).append("\n[… zkráceno, celkem ${raw.length} znaků …]\n").append(raw.takeLast(RAW_LIMIT / 2))
+            }
+            diag.append('\n')
             if (!res.optBoolean("isError")) extractor.addToolResult(c.tool, res)
         }
         val data = extractor.result()
         val result = BatteryModel.compute(data, now, previousLevelAt)
-        diag.insert(0, "=== Rozpoznaná data ===\n${data.describe()}\n\n")
+        diag.insert(0, "=== Rozpoznaná data ===\n${data.describe()}\n\n=== Výpočet ===\n${describe(result)}\n\n")
         return RefreshOutcome(result, data, diag.toString())
+    }
+
+    private fun describe(r: BatteryResult): String {
+        val z = java.time.ZoneId.systemDefault()
+        fun t(e: Long) = java.time.Instant.ofEpochSecond(e).atZone(z).toLocalDateTime().toString().replace('T', ' ')
+        return "Teď: ${r.level}, ráno: ${r.wakeLevel}, spánek ${t(r.sleepStart)} – ${t(r.wakeTime)}, +${r.charged} / −${r.drained}" +
+            r.notes.joinToString("") { "\n• $it" }
     }
 
     private fun safeCall(source: McpSource, tool: String, args: JSONObject): JSONObject? =
@@ -66,7 +77,7 @@ object Refresher {
         if (res.optBoolean("isError")) sb.append("[isError] ")
         for (i in 0 until content.length()) {
             val c = content.optJSONObject(i) ?: continue
-            sb.append(c.optString("text", c.toString())).append('\n')
+            sb.append(DataExtractor.unwrapText(c.optString("text", c.toString()))).append('\n')
         }
         res.optJSONObject("structuredContent")?.let { if (sb.isBlank()) sb.append(it.toString()) }
         return sb.toString()
