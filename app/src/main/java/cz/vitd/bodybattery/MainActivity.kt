@@ -1,12 +1,14 @@
 package cz.vitd.bodybattery
 
-import android.content.ClipData
-import android.content.ClipboardManager
+import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.view.animation.LinearInterpolator
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -27,13 +29,18 @@ import java.time.format.DateTimeFormatter
 class MainActivity : ComponentActivity() {
     private lateinit var ring: ImageView
     private lateinit var status: TextView
-    private lateinit var details: TextView
-    private lateinit var timeline: TimelineView
+    private lateinit var error: TextView
     private lateinit var connect: Button
-    private lateinit var refresh: Button
-    private lateinit var diagToggle: Button
-    private lateinit var diagCopy: Button
-    private lateinit var diag: TextView
+    private lateinit var refresh: ImageButton
+    private lateinit var stats: View
+    private lateinit var chartCard: View
+    private lateinit var statWake: TextView
+    private lateinit var statCharged: TextView
+    private lateinit var statDrained: TextView
+    private lateinit var sleepInfo: TextView
+    private lateinit var timeline: TimelineView
+    private lateinit var notes: TextView
+    private var spinner: ObjectAnimator? = null
     private var pollJob: Job? = null
     private var busy = false
     private val fmt = DateTimeFormatter.ofPattern("HH:mm")
@@ -43,26 +50,22 @@ class MainActivity : ComponentActivity() {
         setContentView(R.layout.activity_main)
         ring = findViewById(R.id.ring)
         status = findViewById(R.id.status)
-        details = findViewById(R.id.details)
-        timeline = findViewById(R.id.timeline)
+        error = findViewById(R.id.error)
         connect = findViewById(R.id.connect)
         refresh = findViewById(R.id.refresh)
-        diagToggle = findViewById(R.id.diag_toggle)
-        diagCopy = findViewById(R.id.diag_copy)
-        diag = findViewById(R.id.diag)
+        stats = findViewById(R.id.stats)
+        chartCard = findViewById(R.id.chart_card)
+        statWake = findViewById(R.id.stat_wake)
+        statCharged = findViewById(R.id.stat_charged)
+        statDrained = findViewById(R.id.stat_drained)
+        sleepInfo = findViewById(R.id.sleep_info)
+        timeline = findViewById(R.id.timeline)
+        notes = findViewById(R.id.notes)
 
-        connect.setOnClickListener { onConnectClicked() }
+        connect.setOnClickListener { startLogin() }
         refresh.setOnClickListener { doRefresh() }
-        diagToggle.setOnClickListener {
-            val show = diag.visibility != View.VISIBLE
-            diag.visibility = if (show) View.VISIBLE else View.GONE
-            diagCopy.visibility = diag.visibility
-            diagToggle.text = if (show) "Skrýt diagnostiku" else "Diagnostika (co posílá Koros)"
-        }
-        diagCopy.setOnClickListener {
-            val cm = getSystemService(ClipboardManager::class.java)
-            cm.setPrimaryClip(ClipData.newPlainText("Body Battery diagnostika", Repo.diagnostics(this)))
-            Toast.makeText(this, "Zkopírováno", Toast.LENGTH_SHORT).show()
+        findViewById<ImageButton>(R.id.settings).setOnClickListener {
+            startActivity(Intent(this, SettingsActivity::class.java))
         }
 
         lifecycleScope.launch {
@@ -84,14 +87,8 @@ class MainActivity : ComponentActivity() {
         render()
     }
 
-    private fun onConnectClicked() {
+    private fun startLogin() {
         val client = Repo.client(this)
-        if (client.isLoggedIn()) {
-            client.logout()
-            Repo.notifyChanged()
-            BatteryWidget.updateAll(this)
-            return
-        }
         busy = true
         render()
         lifecycleScope.launch {
@@ -140,7 +137,7 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun doRefresh() {
-        if (busy) return
+        if (busy || !Repo.client(this).isLoggedIn()) return
         busy = true
         render()
         lifecycleScope.launch {
@@ -150,46 +147,63 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    private fun setSpinning(on: Boolean) {
+        if (on) {
+            if (spinner?.isRunning == true) return
+            spinner = ObjectAnimator.ofFloat(refresh, View.ROTATION, refresh.rotation % 360f, refresh.rotation % 360f + 360f).apply {
+                duration = 900
+                repeatCount = ValueAnimator.INFINITE
+                interpolator = LinearInterpolator()
+                start()
+            }
+        } else {
+            spinner?.cancel()
+            spinner = null
+            refresh.animate().rotation(0f).setDuration(200).start()
+        }
+    }
+
     private fun render() {
         val client = Repo.client(this)
         val loggedIn = client.isLoggedIn()
         val pending = client.hasPendingLogin()
-        val result = Repo.lastResult(this)
+        val result = if (loggedIn) Repo.lastResult(this) else null
         val zone = ZoneId.systemDefault()
+        fun t(e: Long) = Instant.ofEpochSecond(e).atZone(zone).format(fmt)
 
-        ring.setImageBitmap(RingRenderer.render(720, if (loggedIn) result?.level else null, null))
-        connect.text = when {
-            loggedIn -> "Odpojit Koros"
-            pending -> "Začít přihlášení znovu"
-            else -> "Připojit Koros"
-        }
-        refresh.isEnabled = loggedIn && !busy
-        refresh.text = if (busy && loggedIn) "Načítám…" else "Obnovit"
+        ring.setImageBitmap(RingRenderer.render(760, result?.level, result?.let { RingRenderer.labelFor(it.level) }, glow = true))
+        setSpinning(busy && loggedIn)
+        refresh.visibility = if (loggedIn) View.VISIBLE else View.GONE
+        refresh.isEnabled = !busy
+
+        connect.visibility = if (loggedIn) View.GONE else View.VISIBLE
+        connect.isEnabled = !busy
+        connect.text = if (pending) "Začít přihlášení znovu" else "Připojit Koros"
 
         status.text = when {
             pending -> "Dokončete přihlášení v prohlížeči a vraťte se sem…"
             !loggedIn -> "Připojte svůj účet COROS"
-            result == null -> if (busy) "Načítám data z Korosu…" else "Zatím žádná data"
-            else -> "Aktualizováno " + Instant.ofEpochSecond(result.computedAt).atZone(zone).format(fmt)
-        } + "  ·  v" + Repo.appVersion(this)
+            busy && result == null -> "Načítám data z Korosu…"
+            result == null -> "Zatím žádná data"
+            busy -> "Aktualizuji…"
+            else -> "Aktualizováno " + t(result.computedAt)
+        }
+
         val err = Repo.lastError(this)
-        details.text = buildString {
-            if (err != null) append("⚠ ").append(err).append("\n\n")
-            if (result != null && loggedIn) {
-                append("Ráno po probuzení: ${result.wakeLevel}\n")
-                append("Nabito: +${result.charged}   Vybito: −${result.drained}\n")
-                append("Spánek: ${Instant.ofEpochSecond(result.sleepStart).atZone(zone).format(fmt)}–")
-                append(Instant.ofEpochSecond(result.wakeTime).atZone(zone).format(fmt))
-                if (!result.detailed) append("\n(odhad – málo průběžných dat)")
-                result.notes.forEach { append("\n• ").append(it) }
-            }
+        error.visibility = if (err != null) View.VISIBLE else View.GONE
+        error.text = err
+
+        val hasData = result != null
+        stats.visibility = if (hasData) View.VISIBLE else View.GONE
+        chartCard.visibility = if (hasData) View.VISIBLE else View.GONE
+        notes.visibility = if (hasData && (result!!.notes.isNotEmpty() || !result.detailed)) View.VISIBLE else View.GONE
+        if (result != null) {
+            statWake.text = result.wakeLevel.toString()
+            statCharged.text = "+${result.charged}"
+            statDrained.text = "−${result.drained}"
+            sleepInfo.text = "☾ ${t(result.sleepStart)}–${t(result.wakeTime)}"
+            timeline.setData(result.points, result.sleepStart, result.wakeTime)
+            notes.text = result.notes.joinToString("\n") { "• $it" }
         }
-        if (result != null && loggedIn) {
-            timeline.visibility = View.VISIBLE
-            timeline.setData(result.points, result.wakeTime)
-        } else {
-            timeline.visibility = View.GONE
-        }
-        diag.text = Repo.diagnostics(this)
     }
 }
