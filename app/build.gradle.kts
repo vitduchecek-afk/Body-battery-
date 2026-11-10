@@ -53,6 +53,8 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.7")
     implementation("androidx.work:work-runtime-ktx:2.9.1")
     implementation("androidx.viewpager2:viewpager2:1.1.0")
+    // viewpager2 pulls an old Fragment (1.1.0); ActivityResult APIs need >= 1.3.0
+    implementation("androidx.fragment:fragment-ktx:1.8.5")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
 
     androidTestImplementation("androidx.test:runner:1.6.2")
