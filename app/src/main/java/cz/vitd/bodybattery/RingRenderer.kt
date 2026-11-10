@@ -22,11 +22,23 @@ object RingRenderer {
         else -> VERY_LOW
     }
 
+    /** Colour of the VO2 max dial (violet, clearly different from the charge palette). */
+    val VO2_COLOR = Color.rgb(0x9B, 0x8C, 0xFF)
+
+    /** VO2 max dial: same look as the charge dial, ring filled on a 20–80 ml/kg/min scale. */
+    fun renderVo2(sizePx: Int, vo2: Double?, valueText: String, caption: String?): Bitmap {
+        val fraction = vo2?.let { ((it - 20.0) / 60.0).coerceIn(0.03, 1.0).toFloat() }
+        return gauge(sizePx, fraction, valueText, caption, VO2_COLOR, glow = true, numberScale = if (valueText.length > 3) 0.8f else 1f)
+    }
+
     /**
      * Draws the charge ring with the number in the middle.
      * [level] null = no data. [caption] small text under the number. [glow] soft glow (app only).
      */
-    fun render(sizePx: Int, level: Int?, caption: String?, glow: Boolean = false): Bitmap {
+    fun render(sizePx: Int, level: Int?, caption: String?, glow: Boolean = false): Bitmap =
+        gauge(sizePx, level?.let { it.coerceIn(0, 100) / 100f }, level?.toString() ?: "–", caption, level?.let { colorFor(it) }, glow)
+
+    private fun gauge(sizePx: Int, fraction: Float?, valueText: String, caption: String?, col: Int?, glow: Boolean, numberScale: Float = 1f): Bitmap {
         val bmp = Bitmap.createBitmap(sizePx, sizePx, Bitmap.Config.ARGB_8888)
         val c = Canvas(bmp)
         val stroke = sizePx * 0.085f
@@ -36,9 +48,8 @@ object RingRenderer {
             style = Paint.Style.STROKE; strokeWidth = stroke; color = Color.argb(40, 255, 255, 255); strokeCap = Paint.Cap.ROUND
         }
         c.drawArc(rect, 135f, 270f, false, track)
-        if (level != null) {
-            val sweep = 270f * level.coerceIn(0, 100) / 100f
-            val col = colorFor(level)
+        if (fraction != null && col != null) {
+            val sweep = 270f * fraction
             if (glow) {
                 val g = Paint(Paint.ANTI_ALIAS_FLAG).apply {
                     style = Paint.Style.STROKE; strokeWidth = stroke * 1.4f; strokeCap = Paint.Cap.ROUND
@@ -55,13 +66,13 @@ object RingRenderer {
         val text = Paint(Paint.ANTI_ALIAS_FLAG).apply {
             color = Color.WHITE; textAlign = Paint.Align.CENTER
             typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
-            textSize = sizePx * 0.28f
+            textSize = sizePx * 0.28f * numberScale
         }
         val cy = sizePx / 2f - (text.descent() + text.ascent()) / 2 - sizePx * 0.03f
-        c.drawText(level?.toString() ?: "–", sizePx / 2f, cy, text)
+        c.drawText(valueText, sizePx / 2f, cy, text)
         if (caption != null) {
             val small = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-                color = if (level != null && glow) colorFor(level) else Color.argb(200, 255, 255, 255)
+                color = if (fraction != null && col != null && glow) col else Color.argb(200, 255, 255, 255)
                 textAlign = Paint.Align.CENTER
                 typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
                 textSize = sizePx * 0.075f
